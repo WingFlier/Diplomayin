@@ -1,4 +1,14 @@
 <resources>
-    <string name="app_name">Diplom</string>
+    <string name="app_name">Diplom(current)</string>
     <string name="action_settings">Settings</string>
+    <string name="ToolbarName">Напоминания</string>
+
+    <string-array name="spinner_items">
+        <item><font size="18">Заметки</font></item>
+        <item><font size="18">Напоминания</font></item>
+    </string-array>
+    <string name="title_activity_reminder_activity">reminder_activity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragmenoot</string>
 </resources>
