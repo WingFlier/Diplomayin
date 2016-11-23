@@ -4,7 +4,7 @@
     <string name="ToolbarName">Напоминания</string>
 
     <string-array name="spinner_items">
-        <item><font size="18">Заметки</font></item>
+        <item><font  size="20">Заметки</font></item>
         <item><font size="18">Напоминания</font></item>
     </string-array>
     <string name="title_activity_reminder_activity">reminder_activity</string>
