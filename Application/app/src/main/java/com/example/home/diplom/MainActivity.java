@@ -1,6 +1,5 @@
 package com.example.home.diplom;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Notification;
@@ -20,19 +19,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+
+/***
+ * TODO several fab-s https://www.learn2crack.com/2015/10/android-floating-action-button-animations.html
+ * TODO Navigation view burger https://youtu.be/AKSX_Ic6nLU
+ */
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,39 +57,36 @@ public class MainActivity extends AppCompatActivity {
         initFab();
         initToolbar();
         initSpinner();
-        initNotification();
+        initNotification("ticker", "contentTitle", "contentText");
 
 
         manager = getSupportFragmentManager();
         fragmentRemind = new RemindFragment();
         fragmentNote = new FragmentNote();
-//        Toast.makeText(this, myHour, Toast.LENGTH_SHORT).show();
 
 
     }
 
 
-    private void initNotification() {
+    private void initNotification(String ticker, String contentTitle, String contentText) {
 
-        /***
-         * TODO code refactor especially initNotification
-         * TODO several fab-s https://www.learn2crack.com/2015/10/android-floating-action-button-animations.html
-         * TODO Navigation view burger https://youtu.be/AKSX_Ic6nLU
-         */
 
         Context context = getApplicationContext();
 
         Intent intent = new Intent(context, Main2Activity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+                intent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+
         Notification.Builder builder = new Notification.Builder(context);
 
         builder.setContentIntent(pendingIntent)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setTicker("бла бла бла")
+                .setTicker(ticker)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
-                .setContentTitle("title of notification")
-                .setContentText("Todo thing here");
+                .setContentTitle(contentTitle)
+                .setContentText(contentText);
         Notification notification = builder.build();
 
         NotificationManager notificationManager = (NotificationManager) context
