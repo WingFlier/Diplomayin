@@ -1,4 +1,6 @@
-package com.example.home.diplom;
+/*
+
+package com.example.home.diplom.other;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -25,16 +27,18 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.home.diplom.R;
+
 import java.util.Calendar;
 import java.util.Date;
 
-/***
- * TODO several fab-s https://www.learn2crack.com/2015/10/android-floating-action-button-animations.html
- * TODO Navigation view burger https://youtu.be/AKSX_Ic6nLU
- */
 
 
-public class MainActivity extends AppCompatActivity {
+
+
+
+
+public class CodeSample extends AppCompatActivity {
 
     private Fragment fragmentRemind;
     private Fragment fragmentNote;
@@ -60,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
         initNotification("ticker", "contentTitle", "contentText");
 
 
-        manager = getSupportFragmentManager();
-        fragmentRemind = new RemindFragment();
-        fragmentNote = new FragmentNote();
 
 
     }
@@ -95,17 +96,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initSpinner() {
+   private void initSpinner() {
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent,
-                                       View itemSelected, int selectedItemPosition, long selectedId) {
-
+                                       View itemSelected,
+                                       int selectedItemPosition, long selectedId) {
 
                 if (selectedId == 0) {
-
                     transaction = manager.beginTransaction();
                     transaction.add(R.id.layout1, fragmentNote);
                     transaction.remove(fragmentRemind);
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(MainActivity.this, "Choose something", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CodeSample.this, "Choose something", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     showDialog(DIALOG_DATE);
 
                 } else if (fragmentNote.isAdded()) {
-                    Toast.makeText(MainActivity.this, "fragment note", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CodeSample.this, "fragment note", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -169,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
             myYear = year;
             myMonth = monthOfYear + 1;
             myDay = dayOfMonth;
-            //TODO: jamy u date-y Stringov stanal
             //tvDate.setText("Today is " + myDay + "/" + myMonth + "/" + myYear);
             showDialog(DIALOG_TIME);
         }
@@ -201,3 +200,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
+
+
+*/

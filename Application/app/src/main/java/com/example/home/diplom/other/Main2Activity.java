@@ -1,7 +1,9 @@
-package com.example.home.diplom;
+package com.example.home.diplom.other;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.home.diplom.R;
 
 public class Main2Activity extends AppCompatActivity {
 
