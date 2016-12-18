@@ -1,51 +1,76 @@
-package com.example.home.diplom.view;
+package com.example.home.diplom.view.NoteActiviry;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.home.diplom.R;
+import com.example.home.diplom.other.Main2Activity;
+import com.example.home.diplom.view.CommonMethods;
+import com.example.home.diplom.view.DrawerMenuTrueHolder;
+
+import java.util.Calendar;
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
 
+    public static final int ACTIVITY_MAIN = R.layout.activity_main;
     public int num_of_plays = 1;
     private String m_Text = "";
-    TextView textView;
-    NavigationView navigationView;
-    TextView navHead;
+    private NavigationView navigationView;
+    private TextView navHead;
+    private TextView navMonth;
+    private TextView navDay;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fab, fab1, fab2;
+    private Animation fab_open, fab_close, rotate_forward, rotate_backward;
+    DrawerMenuTrueHolder drawerMenuTrueHolder = new DrawerMenuTrueHolder();
+
+
+    //TODO modify CommmonMethods class, move there commont methods of reminder, note,  about (especcially drawer , fab for mainactivity and reminderactivity);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(ACTIVITY_MAIN);
         Toolbar toolbar = initToolbar();
-        textView = (TextView) findViewById(R.id.textView);
-        textView.setText("before it ");
-
-
-        initFab();
+        drawerMenuTrueHolder.setNav_note_true(true);
         initDrawerNav(toolbar);
-
+        fabAnimate();
         View header = navigationView.getHeaderView(0);
         navHead = (TextView) header.findViewById(R.id.nav_header_main_textView);
+        navMonth = (TextView) header.findViewById(R.id.txtMonth);
+        navDay = (TextView) header.findViewById(R.id.txtDay);
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US);
+        navDay.setText(String.valueOf(day));
+        navMonth.setText(String.valueOf(month));
+
 
 
         if (num_of_plays == 1) {
@@ -73,12 +98,43 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void fabAnimate() {
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
+        fab.setOnClickListener(this);
+        fab1.setOnClickListener(this);
+        fab2.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.fab:
+                animateFAB();
+                break;
+            case R.id.fab1:
+                Log.d("str", "fab1");
+                break;
+            case R.id.fab2:
+                Log.d("str", "fab2");
+                break;
+
+        }
+    }
+
     private void initAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter your name");
 
 
         final EditText input = new EditText(this);
+        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
@@ -87,9 +143,9 @@ public class MainActivity extends AppCompatActivity
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 m_Text = input.getText().toString();
                 Toast.makeText(MainActivity.this, m_Text, Toast.LENGTH_SHORT).show();
-                textView.setText("hello");
                 navHead.setText(m_Text);
 
 
@@ -120,16 +176,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void initFab() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
 
     public Toolbar initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -175,23 +221,59 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Intent intent;
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        switch (id) {
+            case R.id.nav_notes:
+                if (!drawerMenuTrueHolder.isNav_note_true()) {
+                    intent = new Intent(MainActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                break;
+            case R.id.nav_remind:
+                if (!drawerMenuTrueHolder.isNav_remind_true()) {
+                    intent = new Intent(MainActivity.this, Main2Activity.class);
+                    startActivity(intent);
+                }
+                break;
+            case R.id.nav_settings:
+                break;
+            case R.id.nav_about:
+                break;
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void animateFAB() {
+
+        if (isFabOpen) {
+
+            fab.startAnimation(rotate_backward);
+            fab1.startAnimation(fab_close);
+            fab2.startAnimation(fab_close);
+            fab1.setClickable(false);
+            fab2.setClickable(false);
+            isFabOpen = false;
+            Log.d("str", "close");
+
+        } else {
+
+            fab.startAnimation(rotate_forward);
+            fab1.startAnimation(fab_open);
+            fab2.startAnimation(fab_open);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            isFabOpen = true;
+            Log.d("str", "open");
+
+        }
+    }
+
+
 }

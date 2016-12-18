@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_splash_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.home.diplom.view.SplashScreen.SplashScreen">
+
+    <ImageView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/colorAccent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loading ..."
+        android:textSize="24sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        tools:ignore="HardcodedText"
+        android:textColor="@color/WHITE" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reminder"
+        android:textSize="36sp"
+        android:layout_marginTop="31dp"
+        tools:ignore="HardcodedText"
+        android:layout_below="@+id/icon"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/WHITE" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:src="@mipmap/icon"
+        tools:ignore="ContentDescription"
+        android:layout_marginTop="195dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
