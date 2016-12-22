@@ -13,7 +13,8 @@
     tools:context="com.example.home.diplom.view.NoteActiviry.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
+   <TextView
+       android:visibility="invisible"
         android:text="Create Your First Note"
         android:textSize="30sp"
         android:textColor="@color/Grey"
@@ -22,5 +23,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtNoNote"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+       android:layout_centerHorizontal="true" />
+
+
+   <ListView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/android:list" />
+
+
 </RelativeLayout>

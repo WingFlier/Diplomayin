@@ -1,14 +1,21 @@
 package com.example.home.diplom.view.NoteActiviry;
 
 import android.app.AlertDialog;
+import android.app.LoaderManager;
+import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
-
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,25 +28,32 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.home.diplom.R;
+import com.example.home.diplom.model.DataBase;
 import com.example.home.diplom.other.Main2Activity;
-import com.example.home.diplom.view.CommonMethods;
+import com.example.home.diplom.presenter.provider.NotesProvider;
 import com.example.home.diplom.view.DrawerMenuTrueHolder;
 
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * @author Tiko :)
+ */
+
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
 
     public static final int ACTIVITY_MAIN = R.layout.activity_main;
-    public int num_of_plays = 1;
+
+
     private String m_Text = "";
     private NavigationView navigationView;
     private TextView navHead;
@@ -49,9 +63,17 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab, fab1, fab2;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
     DrawerMenuTrueHolder drawerMenuTrueHolder = new DrawerMenuTrueHolder();
+    boolean defValue;
+    //adapter for listView;
+    CursorAdapter cursorAdapter;
 
 
     //TODO modify CommmonMethods class, move there commont methods of reminder, note,  about (especcially drawer , fab for mainactivity and reminderactivity);
+
+    @Override
+    protected void onDestroy() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,31 +94,56 @@ public class MainActivity extends AppCompatActivity
         navMonth.setText(String.valueOf(month));
 
 
+        /**
+         * TODO fix firstrun feature;
+         * TODO move saving feature to model
+         SharedPreferences sharedPref;
+         SharedPreferences.Editor editor;
+         boolean first_run = true;
+         sharedPref = getSharedPreferences("mypref", 0);
+         editor = sharedPref.edit();
+         if (first_run) {
+         Toast.makeText(this, "первый запуск", Toast.LENGTH_SHORT).show();
+         initAlertDialog();
+         }
+         first_run = true;
+         editor.putBoolean("num", first_run);
+         first_run = sharedPref.getBoolean("num", defValue);
+         Log.d("str", m_Text);
+         editor.commit();
+         */
 
-        if (num_of_plays == 1) {
-            Toast.makeText(this, "первый запуск", Toast.LENGTH_SHORT).show();
-            initAlertDialog();
+       /* TextView text = new TextView(this);
+        text.setText("Create Your First Note");
+        text.setWidth(230);
+        text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        text.setTextSize(30);
+        text.setTextColor(getResources().getColor(R.color.Grey));*/
 
 
-        }
+        /** insertNote("new Note");*/
+        //for base update when delete or add
+        //getLoaderManager().restartLoader(0 , null , this);
 
-        num_of_plays++;
-        Log.d("str", String.valueOf(num_of_plays));
-
-
-        //<editor-fold desc="TODO fix saving system. Not working">
-
-
-       /* SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        SharedPreferences.Editor editor = app_preferences.edit();
-        editor.putInt("questionNumber", num_of_plays);
-        editor.commit();*/
-
-        //</editor-fold>
+        String[] from = {DataBase.NOTE_TEXT};
+        int[] to = {android.R.id.text1};
+        cursorAdapter = new SimpleCursorAdapter(this,
+                android.R.layout.simple_list_item_1, null, from, to, 0);
+        ListView list = (ListView) findViewById(android.R.id.list);
+        list.setAdapter(cursorAdapter);
+        getLoaderManager().initLoader(0, null, this);
 
 
     }
+
+    private void insertNote(String note) {
+        ContentValues values = new ContentValues();
+        values.put(DataBase.NOTE_TEXT, note);
+        Uri noteURi = getContentResolver().insert(NotesProvider.CONTENT_URI, values);
+        Log.d("stringstring", "inserted note " + noteURi.getLastPathSegment());
+
+    }
+
 
     private void fabAnimate() {
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -119,6 +166,7 @@ public class MainActivity extends AppCompatActivity
                 animateFAB();
                 break;
             case R.id.fab1:
+
                 Log.d("str", "fab1");
                 break;
             case R.id.fab2:
@@ -145,7 +193,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
 
                 m_Text = input.getText().toString();
-                Toast.makeText(MainActivity.this, m_Text, Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(MainActivity.this, m_Text, Toast.LENGTH_SHORT).show();
                 navHead.setText(m_Text);
 
 
@@ -275,5 +323,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    //background processed as asynctask
 
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(this, NotesProvider.CONTENT_URI,
+                null, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        cursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        cursorAdapter.swapCursor(null);
+    }
 }

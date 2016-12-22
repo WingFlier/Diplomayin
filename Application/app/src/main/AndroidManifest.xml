@@ -23,6 +23,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.ReminderActivity.ReminderActivity"></activity>
+
+        <provider
+            android:authorities="com.example.home.diplom.notesprovider"
+            android:name=".presenter.provider.NotesProvider"
+            android:exported="false" />
+
     </application>
 
 </manifest>
