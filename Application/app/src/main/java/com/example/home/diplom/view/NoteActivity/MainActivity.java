@@ -1,4 +1,4 @@
-package com.example.home.diplom.view.NoteActiviry;
+package com.example.home.diplom.view.NoteActivity;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
@@ -7,34 +7,37 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
 import com.example.home.diplom.other.Main2Activity;
+import com.example.home.diplom.presenter.provider.NotesCursorAdapter;
 import com.example.home.diplom.presenter.provider.NotesProvider;
 import com.example.home.diplom.view.DrawerMenuTrueHolder;
 
@@ -52,6 +55,8 @@ public class MainActivity extends AppCompatActivity
 
 
     public static final int ACTIVITY_MAIN = R.layout.activity_main;
+    private static final int EDITOR_REQUEST_CODE = 100;
+    private static final String PREFS_NAME ="myprefs" ;
 
 
     private String m_Text = "";
@@ -65,7 +70,11 @@ public class MainActivity extends AppCompatActivity
     DrawerMenuTrueHolder drawerMenuTrueHolder = new DrawerMenuTrueHolder();
     boolean defValue;
     //adapter for listView;
-    CursorAdapter cursorAdapter;
+    private android.widget.CursorAdapter cursorAdapter;
+    private RelativeLayout.LayoutParams lp;
+    SharedPreferences.Editor editor;
+    SharedPreferences settings;
+
 
 
     //TODO modify CommmonMethods class, move there commont methods of reminder, note,  about (especcially drawer , fab for mainactivity and reminderactivity);
@@ -92,48 +101,116 @@ public class MainActivity extends AppCompatActivity
         String month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US);
         navDay.setText(String.valueOf(day));
         navMonth.setText(String.valueOf(month));
-
-
-        /**
-         * TODO fix firstrun feature;
-         * TODO move saving feature to model
-         SharedPreferences sharedPref;
-         SharedPreferences.Editor editor;
-         boolean first_run = true;
-         sharedPref = getSharedPreferences("mypref", 0);
-         editor = sharedPref.edit();
-         if (first_run) {
-         Toast.makeText(this, "первый запуск", Toast.LENGTH_SHORT).show();
-         initAlertDialog();
-         }
-         first_run = true;
-         editor.putBoolean("num", first_run);
-         first_run = sharedPref.getBoolean("num", defValue);
-         Log.d("str", m_Text);
-         editor.commit();
-         */
-
-        TextView text = new TextView(this);
-        text.setText("Create Your First Note");
-        text.setWidth(230);
-        text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        text.setTextSize(30);
-        text.setTextColor(getResources().getColor(R.color.Grey));
-
-
-        /** insertNote("new Note");*/
-        //for base update when delete or add
-        //getLoaderManager().restartLoader(0 , null , this);
-
-        String[] from = {DataBase.NOTE_TEXT};
-        int[] to = {android.R.id.text1};
-        cursorAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1, null, from, to, 0);
         ListView list = (ListView) findViewById(android.R.id.list);
+
+
+/**here */
+         /*settings = getSharedPreferences(PREFS_NAME, 0);
+        m_Text = settings.getString("name" , "123 ");
+        boolean firstRun = settings.getBoolean("firstRun", true);
+        if (firstRun) {
+            Toast.makeText(this, "first time", Toast.LENGTH_SHORT).show();
+
+            initAlertDialog();
+
+
+            editor = settings.edit(); // Open the editor for our settings
+            editor.putString("name" , m_Text);
+            editor.putBoolean("firstRun", false); // It is no longer the first run
+            editor.commit(); // Save all changed settings
+        } else {
+            Toast.makeText(this, "Not first time", Toast.LENGTH_SHORT).show();
+
+        }
+        Toast.makeText(this, m_Text, Toast.LENGTH_SHORT).show();
+*/
+
+
+        //insertNote("new \n hi ");
+        //for base update when delete or add
+        //ReloadCursor();
+
+        View layout = findViewById(R.id.main_Layout);
+        cursorAdapter = new NotesCursorAdapter(this, null, 0);
         list.setAdapter(cursorAdapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
+                Uri uri = Uri.parse(NotesProvider.CONTENT_URI + "/" + id);
+                intent.putExtra(NotesProvider.CONTENT_ITEM_TYPE, uri);
+                startActivityForResult(intent, EDITOR_REQUEST_CODE);
+            }
+        });
+
         getLoaderManager().initLoader(0, null, this);
+        //TODO not working
+        if (cursorAdapter == null) {
+            TextView textCenter = new TextView(this);
+            textCenter.setLayoutParams(new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT));
 
 
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) textCenter.getLayoutParams();
+            lp.addRule(RelativeLayout.CENTER_VERTICAL);
+            lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            textCenter.setLayoutParams(lp);
+
+            textCenter.setGravity(Gravity.BOTTOM);
+
+            textCenter.setText("Create Your First Note By Clicking The Plus Button");
+            textCenter.setWidth(600);
+            textCenter.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textCenter.setTextSize(35);
+            textCenter.setTextColor(getResources().getColor(R.color.Grey));
+            ((RelativeLayout) layout).addView(textCenter);
+        }
+
+
+    }
+
+    private void initAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter your name");
+
+
+        final EditText input = new EditText(this);
+        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                m_Text = input.getText().toString();
+                  Toast.makeText(MainActivity.this, m_Text, Toast.LENGTH_SHORT).show();
+                navHead.setText(m_Text);
+
+
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                finish();
+                System.exit(0);
+            }
+        });
+
+        builder.show();
+
+        ;
+
+    }
+
+    private void ReloadCursor() {
+        getLoaderManager().restartLoader(0, null, this);
     }
 
     private void insertNote(String note) {
@@ -170,45 +247,20 @@ public class MainActivity extends AppCompatActivity
                 Log.d("str", "fab1");
                 break;
             case R.id.fab2:
-                Log.d("str", "fab2");
+                Intent intent = new Intent(this, NewNoteActivity.class);
+                startActivityForResult(intent, EDITOR_REQUEST_CODE);
                 break;
 
         }
+
+
     }
 
-    private void initAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter your name");
-
-
-        final EditText input = new EditText(this);
-        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
-
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                m_Text = input.getText().toString();
-                //  Toast.makeText(MainActivity.this, m_Text, Toast.LENGTH_SHORT).show();
-                navHead.setText(m_Text);
-
-
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                finish();
-                System.exit(0);
-            }
-        });
-
-        builder.show();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
+            ReloadCursor();
+        }
 
     }
 
@@ -257,11 +309,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.delete_all_notes:
+                DeleteAllNotes();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void DeleteAllNotes() {
+        getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
+        ReloadCursor();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.home.diplom.R;
-import com.example.home.diplom.view.NoteActiviry.MainActivity;
+import com.example.home.diplom.view.NoteActivity.MainActivity;
 
 public class SplashScreen extends AppCompatActivity {
 

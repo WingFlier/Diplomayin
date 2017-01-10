@@ -10,9 +10,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".other.Main2Activity" />
         <activity
-            android:name=".view.NoteActiviry.MainActivity"
+            android:name=".view.NoteActivity.MainActivity"
             android:label="@string/title_activity_main22"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.SplashScreen.SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
@@ -22,13 +22,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ReminderActivity.ReminderActivity"></activity>
+        <activity android:name=".view.ReminderActivity.ReminderActivity" />
 
         <provider
-            android:authorities="com.example.home.diplom.notesprovider"
             android:name=".presenter.provider.NotesProvider"
+            android:authorities="com.example.home.diplom.notesprovider"
             android:exported="false" />
 
+        <activity
+            android:name=".view.NoteActivity.NewNoteActivity"
+            android:label="New Note"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.home.diplom.view.NoteActivity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

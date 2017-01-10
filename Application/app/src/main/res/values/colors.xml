@@ -4,6 +4,7 @@
     <color name="colorAccent">#FF0096A6</color>
     <color name="WHITE">#fff</color>
     <color name="Grey">#c4c4c4</color>
+    <color name="note_list_item">#747474</color>
     <color name="colorFAB2">#766975</color>
     <color name="colorFAB1">#766975</color>
 </resources>
