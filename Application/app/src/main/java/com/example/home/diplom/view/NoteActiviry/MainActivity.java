@@ -113,12 +113,12 @@ public class MainActivity extends AppCompatActivity
          editor.commit();
          */
 
-       /* TextView text = new TextView(this);
+        TextView text = new TextView(this);
         text.setText("Create Your First Note");
         text.setWidth(230);
         text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         text.setTextSize(30);
-        text.setTextColor(getResources().getColor(R.color.Grey));*/
+        text.setTextColor(getResources().getColor(R.color.Grey));
 
 
         /** insertNote("new Note");*/
