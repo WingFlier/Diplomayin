@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_reminder"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout_remind"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context="com.example.home.diplom.view.ReminderActivity.ReminderActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
     <include
         layout="@layout/app_bar_reminder"
@@ -14,7 +14,7 @@
         android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/nav_view_remind"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
@@ -22,4 +22,4 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

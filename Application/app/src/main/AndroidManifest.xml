@@ -22,7 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ReminderActivity.ReminderActivity" />
+        <activity
+            android:name=".view.ReminderActivity.ReminderActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name=".presenter.provider.NotesProvider"
@@ -37,6 +39,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.home.diplom.view.NoteActivity.MainActivity" />
         </activity>
+        <activity
+            android:name=".view.AboutActivity.AboutActivity"
+            android:theme="@style/Theme.AppCompat.Dialog"></activity>
     </application>
 
 </manifest>

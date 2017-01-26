@@ -2,6 +2,7 @@ package com.example.home.diplom.view.NoteActivity;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -39,7 +41,10 @@ import com.example.home.diplom.model.DataBase;
 import com.example.home.diplom.other.Main2Activity;
 import com.example.home.diplom.presenter.provider.NotesCursorAdapter;
 import com.example.home.diplom.presenter.provider.NotesProvider;
+import com.example.home.diplom.view.AboutActivity.AboutActivity;
+import com.example.home.diplom.view.CommonMethods;
 import com.example.home.diplom.view.DrawerMenuTrueHolder;
+import com.example.home.diplom.view.ReminderActivity.ReminderActivity;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -56,7 +61,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final int ACTIVITY_MAIN = R.layout.activity_main;
     private static final int EDITOR_REQUEST_CODE = 100;
-    private static final String PREFS_NAME ="myprefs" ;
+    private static final String PREFS_NAME = "myprefs";
 
 
     private String m_Text = "";
@@ -77,7 +82,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    //TODO modify CommmonMethods class, move there commont methods of reminder, note,  about (especcially drawer , fab for mainactivity and reminderactivity);
 
     @Override
     protected void onDestroy() {
@@ -93,37 +97,12 @@ public class MainActivity extends AppCompatActivity
         initDrawerNav(toolbar);
         fabAnimate();
         View header = navigationView.getHeaderView(0);
-        navHead = (TextView) header.findViewById(R.id.nav_header_main_textView);
         navMonth = (TextView) header.findViewById(R.id.txtMonth);
         navDay = (TextView) header.findViewById(R.id.txtDay);
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US);
-        navDay.setText(String.valueOf(day));
-        navMonth.setText(String.valueOf(month));
+        CommonMethods.getDay(header, navMonth, navDay);
         ListView list = (ListView) findViewById(android.R.id.list);
 
 
-/**here */
-         /*settings = getSharedPreferences(PREFS_NAME, 0);
-        m_Text = settings.getString("name" , "123 ");
-        boolean firstRun = settings.getBoolean("firstRun", true);
-        if (firstRun) {
-            Toast.makeText(this, "first time", Toast.LENGTH_SHORT).show();
-
-            initAlertDialog();
-
-
-            editor = settings.edit(); // Open the editor for our settings
-            editor.putString("name" , m_Text);
-            editor.putBoolean("firstRun", false); // It is no longer the first run
-            editor.commit(); // Save all changed settings
-        } else {
-            Toast.makeText(this, "Not first time", Toast.LENGTH_SHORT).show();
-
-        }
-        Toast.makeText(this, m_Text, Toast.LENGTH_SHORT).show();
-*/
 
 
         //insertNote("new \n hi ");
@@ -142,6 +121,7 @@ public class MainActivity extends AppCompatActivity
                 startActivityForResult(intent, EDITOR_REQUEST_CODE);
             }
         });
+
 
         getLoaderManager().initLoader(0, null, this);
         //TODO not working
@@ -170,47 +150,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void initAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter your name");
 
 
-        final EditText input = new EditText(this);
-        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
-
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                m_Text = input.getText().toString();
-                  Toast.makeText(MainActivity.this, m_Text, Toast.LENGTH_SHORT).show();
-                navHead.setText(m_Text);
-
-
-
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                finish();
-                System.exit(0);
-            }
-        });
-
-        builder.show();
-
-        ;
-
-    }
 
     private void ReloadCursor() {
         getLoaderManager().restartLoader(0, null, this);
+
     }
 
     private void insertNote(String note) {
@@ -261,9 +206,7 @@ public class MainActivity extends AppCompatActivity
         if (requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
             ReloadCursor();
         }
-
     }
-
 
     private void initDrawerNav(Toolbar toolbar) {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -271,11 +214,9 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
 
     public Toolbar initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -317,6 +258,8 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+
     private void DeleteAllNotes() {
         getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
         ReloadCursor();
@@ -338,28 +281,24 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_remind:
                 if (!drawerMenuTrueHolder.isNav_remind_true()) {
-                    intent = new Intent(MainActivity.this, Main2Activity.class);
+                    intent = new Intent(MainActivity.this, ReminderActivity.class);
                     startActivity(intent);
                 }
                 break;
             case R.id.nav_settings:
                 break;
             case R.id.nav_about:
+                intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
                 break;
-
-
         }
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     public void animateFAB() {
-
         if (isFabOpen) {
-
             fab.startAnimation(rotate_backward);
             fab1.startAnimation(fab_close);
             fab2.startAnimation(fab_close);
@@ -367,9 +306,7 @@ public class MainActivity extends AppCompatActivity
             fab2.setClickable(false);
             isFabOpen = false;
             Log.d("str", "close");
-
         } else {
-
             fab.startAnimation(rotate_forward);
             fab1.startAnimation(fab_open);
             fab2.startAnimation(fab_open);
@@ -377,12 +314,8 @@ public class MainActivity extends AppCompatActivity
             fab2.setClickable(true);
             isFabOpen = true;
             Log.d("str", "open");
-
         }
     }
-
-    //background processed as asynctask
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

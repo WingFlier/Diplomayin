@@ -10,6 +10,14 @@ public class DrawerMenuTrueHolder {
     public boolean nav_settings_true = false;
     public boolean nav_about_true = false;
 
+    public DrawerMenuTrueHolder() {
+        setNav_note_true(false);
+        setNav_remind_true(false);
+        setNav_settings_true(false);
+        setNav_about_true(false);
+    }
+
+
     public boolean isNav_note_true() {
         return nav_note_true;
     }
@@ -42,10 +50,5 @@ public class DrawerMenuTrueHolder {
         this.nav_about_true = nav_about_true;
     }
 
-    public DrawerMenuTrueHolder() {
-        setNav_note_true(false);
-        setNav_remind_true(false);
-        setNav_settings_true(false);
-        setNav_about_true(false);
-    }
 }
+

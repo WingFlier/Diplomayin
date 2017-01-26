@@ -36,4 +36,9 @@ public class NotesCursorAdapter extends CursorAdapter {
         TextView tv = (TextView) view.findViewById(R.id.tvNote);
         tv.setText(noteText);
     }
+
+    @Override
+    public int getCount() {
+        return super.getCount();
+    }
 }

@@ -23,6 +23,7 @@ public class NotesProvider extends ContentProvider {
     private static final int NOTES = 1;
     private static final int NOTES_ID = 2;
 
+
     private static final UriMatcher uriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -34,12 +35,15 @@ public class NotesProvider extends ContentProvider {
     }
 
     private SQLiteDatabase database;
+    private DataBase base;
+
 
     @Override
     public boolean onCreate() {
 
-        DataBase base = new DataBase(getContext());
+        base = new DataBase(getContext());
         database = base.getWritableDatabase();
+
         return true;
     }
 
@@ -47,7 +51,7 @@ public class NotesProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
-        if ( uriMatcher.match(uri) == NOTES_ID){
+        if (uriMatcher.match(uri) == NOTES_ID) {
             selection = DataBase.NOTE_ID + "=" + uri.getLastPathSegment();
 
         }
