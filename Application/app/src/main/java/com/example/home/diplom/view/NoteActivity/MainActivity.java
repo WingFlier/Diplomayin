@@ -1,15 +1,14 @@
 package com.example.home.diplom.view.NoteActivity;
 
-import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,8 +19,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputFilter;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -30,7 +27,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,7 +34,6 @@ import android.widget.Toast;
 
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
-import com.example.home.diplom.other.Main2Activity;
 import com.example.home.diplom.presenter.provider.NotesCursorAdapter;
 import com.example.home.diplom.presenter.provider.NotesProvider;
 import com.example.home.diplom.view.AboutActivity.AboutActivity;
@@ -46,14 +41,11 @@ import com.example.home.diplom.view.CommonMethods;
 import com.example.home.diplom.view.DrawerMenuTrueHolder;
 import com.example.home.diplom.view.ReminderActivity.ReminderActivity;
 
-import java.util.Calendar;
-import java.util.Locale;
-
 /**
  * @author Tiko :)
  */
 
-
+//TODO crush after method delete all notes
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
@@ -64,7 +56,6 @@ public class MainActivity extends AppCompatActivity
     private static final String PREFS_NAME = "myprefs";
 
 
-    private String m_Text = "";
     private NavigationView navigationView;
     private TextView navHead;
     private TextView navMonth;
@@ -73,20 +64,12 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab, fab1, fab2;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
     DrawerMenuTrueHolder drawerMenuTrueHolder = new DrawerMenuTrueHolder();
-    boolean defValue;
     //adapter for listView;
     private android.widget.CursorAdapter cursorAdapter;
     private RelativeLayout.LayoutParams lp;
-    SharedPreferences.Editor editor;
-    SharedPreferences settings;
+    View layout;
+    TextView textCenter = null;
 
-
-
-
-    @Override
-    protected void onDestroy() {
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +86,11 @@ public class MainActivity extends AppCompatActivity
         ListView list = (ListView) findViewById(android.R.id.list);
 
 
-
-
         //insertNote("new \n hi ");
         //for base update when delete or add
         //ReloadCursor();
 
-        View layout = findViewById(R.id.main_Layout);
+        layout = findViewById(R.id.main_Layout);
         cursorAdapter = new NotesCursorAdapter(this, null, 0);
         list.setAdapter(cursorAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -124,48 +105,18 @@ public class MainActivity extends AppCompatActivity
 
 
         getLoaderManager().initLoader(0, null, this);
-        //TODO not working
-        if (cursorAdapter == null) {
-            TextView textCenter = new TextView(this);
-            textCenter.setLayoutParams(new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT));
-
-
-            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) textCenter.getLayoutParams();
-            lp.addRule(RelativeLayout.CENTER_VERTICAL);
-            lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            textCenter.setLayoutParams(lp);
-
-            textCenter.setGravity(Gravity.BOTTOM);
-
-            textCenter.setText("Create Your First Note By Clicking The Plus Button");
-            textCenter.setWidth(600);
-            textCenter.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            textCenter.setTextSize(35);
-            textCenter.setTextColor(getResources().getColor(R.color.Grey));
-            ((RelativeLayout) layout).addView(textCenter);
-        }
+        CheckText();
 
 
     }
-
-
 
 
     private void ReloadCursor() {
         getLoaderManager().restartLoader(0, null, this);
+        CheckText();
+
 
     }
-
-    private void insertNote(String note) {
-        ContentValues values = new ContentValues();
-        values.put(DataBase.NOTE_TEXT, note);
-        Uri noteURi = getContentResolver().insert(NotesProvider.CONTENT_URI, values);
-        Log.d("stringstring", "inserted note " + noteURi.getLastPathSegment());
-
-    }
-
 
     private void fabAnimate() {
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -253,11 +204,55 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.delete_all_notes:
                 DeleteAllNotes();
+                ReloadCursor();
+                break;
+            case R.id.add_sample_notes:
+                insertNote("sample note1");
+                insertNote("sample note2");
+                insertNote("sample note3");
+                ReloadCursor();
+                break;
+            case R.id.get_count_of_notes:
+
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void insertNote(String note) {
+        ContentValues values = new ContentValues();
+        values.put(DataBase.NOTE_TEXT, note);
+        Uri noteURi = getContentResolver().insert(NotesProvider.CONTENT_URI, values);
+        Log.d("stringstring", "inserted note " + noteURi.getLastPathSegment());
+
+    }
+
+    private void CheckText() {
+        if (textCenter == null) {
+            textCenter = new TextView(this);
+        }
+        if (cursorAdapter.getCount() != 0) {
+
+            textCenter.setVisibility(View.GONE);
+
+        } else {
+            textCenter.setLayoutParams(new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT));
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) textCenter.getLayoutParams();
+            lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            lp.addRule(RelativeLayout.CENTER_VERTICAL);
+            textCenter.setLayoutParams(lp);
+            textCenter.setGravity(Gravity.BOTTOM);
+            textCenter.setText("Create Notes By Clicking The Plus Button");
+            textCenter.setWidth(600);
+            textCenter.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textCenter.setTextSize(30);
+            //textCenter.setVisibility(View.VISIBLE);
+            textCenter.setTextColor(getResources().getColor(R.color.Grey));
+            ((RelativeLayout) layout).addView(textCenter);
+        }
+    }
 
 
     private void DeleteAllNotes() {
@@ -332,4 +327,6 @@ public class MainActivity extends AppCompatActivity
     public void onLoaderReset(Loader<Cursor> loader) {
         cursorAdapter.swapCursor(null);
     }
+
+
 }

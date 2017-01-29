@@ -7,6 +7,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.CancellationSignal;
 import android.support.annotation.Nullable;
 
 import com.example.home.diplom.model.DataBase;
@@ -35,6 +36,7 @@ public class NotesProvider extends ContentProvider {
     }
 
     private SQLiteDatabase database;
+    private static SQLiteDatabase database1;
     private DataBase base;
 
 
@@ -43,6 +45,7 @@ public class NotesProvider extends ContentProvider {
 
         base = new DataBase(getContext());
         database = base.getWritableDatabase();
+        database1 = base.getWritableDatabase();
 
         return true;
     }
@@ -83,5 +86,14 @@ public class NotesProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return database.update(DataBase.TABLE_NOTES, values, selection,
                 selectionArgs);
+    }
+
+
+    public int getRows() {
+        Cursor mCount = database.rawQuery("select count(*) from" + DataBase.TABLE_NOTES, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(1);
+        mCount.close();
+        return count;
     }
 }

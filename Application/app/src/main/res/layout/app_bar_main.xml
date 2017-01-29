@@ -32,7 +32,7 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:visibility="invisible"
         app:backgroundTint="@color/colorFAB2"
-        android:src="@mipmap/ic_note" />
+        android:src="@drawable/ic_action_note_add" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab1"

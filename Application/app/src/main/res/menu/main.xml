@@ -9,6 +9,15 @@
     <item
         android:id="@+id/delete_all_notes"
         android:title="Delete all notes"
-        android:orderInCategory="101"
-        ></item>
+        android:orderInCategory="101" />
+
+    <item
+        android:id="@+id/add_sample_notes"
+        android:title="Add some sample notes"
+        android:orderInCategory="102" />
+
+    <item
+        android:id="@+id/get_count_of_notes"
+        android:title="Get count of notes"
+        android:orderInCategory="103" />
 </menu>

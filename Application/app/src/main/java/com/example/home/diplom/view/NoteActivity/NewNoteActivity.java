@@ -124,6 +124,11 @@ public class NewNoteActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finishEditing();
+    }
 
+    @Override
+    protected void onStop() {
+        finishEditing();
+        super.onStop();
     }
 }

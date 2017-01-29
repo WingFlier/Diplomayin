@@ -41,4 +41,6 @@ public class NotesCursorAdapter extends CursorAdapter {
     public int getCount() {
         return super.getCount();
     }
+
+
 }
