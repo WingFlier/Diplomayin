@@ -5,12 +5,12 @@
     <item
         android:id="@+id/note_delete"
         android:orderInCategory="100"
-        android:title="delet note"
+        android:title="@string/delete_note"
         app:showAsAction="always"
         android:icon="@mipmap/ic_delete_variant"/>
     <item
         android:id="@+id/note_discard"
-        android:title="Discard"
+        android:title="@string/discard"
         android:orderInCategory="101"
         android:showAsAction="ifRoom"
         tools:ignore="AppCompatResource" />

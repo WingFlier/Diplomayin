@@ -5,44 +5,43 @@
         <item
             android:id="@+id/nav_notes"
             android:icon="@mipmap/ic_note"
-            android:title="Notes" />
+            android:title="@string/notes" />
         <item
             android:id="@+id/nav_remind"
             android:icon="@mipmap/ic_alarm"
-            android:title="Reminders" />
+            android:title="@string/reminders" />
 
     </group>
 
-    <item android:title="Reminders">
+    <item android:title="@string/reminders_sub_menu">
         <menu>
             <item
                 android:id="@+id/nav_personal"
                 android:icon="@mipmap/ic_bookmark"
-                android:title="Personal" />
+                android:title="@string/personal" />
             <item
                 android:id="@+id/nav_birthday"
                 android:icon="@mipmap/ic_bookmark"
-                android:title="Birthdays" />
+                android:title="@string/birthdays" />
             <item
                 android:id="@+id/nav_other"
                 android:icon="@mipmap/ic_bookmark"
-                android:title="Other" />
+                android:title="@string/other" />
 
         </menu>
     </item>
 
 
-
-    <item android:title="Other">
+    <item android:title="@string/other_sub_menu">
         <menu>
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@mipmap/ic_settings"
-                android:title="Settings" />
+                android:title="@string/action_settings" />
             <item
                 android:id="@+id/nav_about"
                 android:icon="@mipmap/ic_information_outline"
-                android:title="About App" />
+                android:title="@string/about_app" />
 
         </menu>
     </item>

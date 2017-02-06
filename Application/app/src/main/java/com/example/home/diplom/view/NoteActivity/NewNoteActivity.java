@@ -25,6 +25,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private String oldText;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +39,13 @@ public class NewNoteActivity extends AppCompatActivity {
 
         if (uri == null) {
             action = Intent.ACTION_INSERT;
-            setTitle("new Note");
-        }else{
+            setTitle(R.string.new_note_activity);
+        } else {
             action = Intent.ACTION_EDIT;
             noteFilter = DataBase.NOTE_ID + "=" + uri.getLastPathSegment();
 
             Cursor cursor = getContentResolver().query(uri, DataBase.ALL_COLUMNS, noteFilter,
-                    null,null);
+                    null, null);
             cursor.moveToFirst();
             oldText = cursor.getString(cursor.getColumnIndex(DataBase.NOTE_TEXT));
             editor.setText(oldText);
@@ -58,12 +59,15 @@ public class NewNoteActivity extends AppCompatActivity {
         return true;
     }
 
+    String newText;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()){
+        newText = editor.getText().toString().trim();
+        switch (item.getItemId()) {
             case R.id.note_delete:
-                deleteNote();
+                if (newText.length() == 0) setResult(RESULT_CANCELED);
+                else deleteNote();
                 break;
             case R.id.note_discard:
                 setResult(RESULT_CANCELED);
@@ -73,7 +77,8 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void finishEditing() {
-        String newText = editor.getText().toString().trim();
+        newText = editor.getText().toString().trim();
+
 
         switch (action) {
             case Intent.ACTION_INSERT:
@@ -84,13 +89,14 @@ public class NewNoteActivity extends AppCompatActivity {
                 }
                 break;
             case Intent.ACTION_EDIT:
-                if (newText.length() == 0){
+                if (newText.length() == 0) {
                     deleteNote();
-                }else if(oldText.equals(newText)){
+                } else if (oldText.equals(newText)) {
                     setResult(RESULT_CANCELED);
-                }else{
+                } else {
                     updateNote(newText);
                 }
+                break;
         }
         finish();
 
@@ -98,7 +104,7 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void deleteNote() {
-        getContentResolver().delete(NotesProvider.CONTENT_URI,noteFilter,null);
+        getContentResolver().delete(NotesProvider.CONTENT_URI, noteFilter, null);
         Toast.makeText(this, "Note Deleted", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
         finish();
@@ -107,7 +113,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private void updateNote(String note) {
         ContentValues values = new ContentValues();
         values.put(DataBase.NOTE_TEXT, note);
-        getContentResolver().update(NotesProvider.CONTENT_URI,values, noteFilter, null);
+        getContentResolver().update(NotesProvider.CONTENT_URI, values, noteFilter, null);
         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
     }

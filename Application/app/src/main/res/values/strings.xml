@@ -1,12 +1,28 @@
 <resources>
     <string name="app_name">RemindNote</string>
-    <string name="action_settings">Settings</string>
-    <string name="ToolbarName">Напоминания</string>
+    <string name="action_settings">Настройки</string>
+
 
     <string name="title_activity_reminder_activity">reminder_activity</string>
-    <string name="hello_blank_fragment">Hello blank fragmenoot</string>
     <string name="title_activity_main22">Diplom</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_new_note">NewNoteActivity</string>
+    <string name="first_run_alert"><![CDATA[<b><h3>Создавайте Заметки Нажав на Кнопку Плюс<h3></b>]]></string>
+    <string name="no_more_show_first_run">Не показывать</string>
+    <string name="add_some_sample_notes">Добавить Несколько тестовых заметок</string>
+    <string name="discard">Отмена</string>
+    <string name="settings_for_developer">Для разработчика</string>
+    <string name="delete_all_notes">Удалить все записи</string>
+    <string name="delete_note">Удалить запись</string>
+    <string name="notes">Заметки</string>
+    <string name="reminders">Напоминания</string>
+    <string name="reminders_sub_menu">Напоминания</string>
+    <string name="personal">Персональные</string>
+    <string name="birthdays">Дни рождения</string>
+    <string name="other">Другие</string>
+    <string name="other_sub_menu">Другие</string>
+    <string name="about_app">Про приложение</string>
+    <string name="new_note_activity">Новая Заметка</string>
+    <string name="new_note_editText">Пишите Здесь</string>
+    <string name="splash_screen_loading">Загрузка ...</string>
 </resources>

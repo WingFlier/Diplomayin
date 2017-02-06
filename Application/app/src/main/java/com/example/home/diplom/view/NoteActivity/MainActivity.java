@@ -1,15 +1,13 @@
 package com.example.home.diplom.view.NoteActivity;
 
 import android.app.LoaderManager;
-import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,8 +15,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -30,8 +30,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
 import com.example.home.diplom.presenter.provider.NotesCursorAdapter;
@@ -45,7 +43,8 @@ import com.example.home.diplom.view.ReminderActivity.ReminderActivity;
  * @author Tiko :)
  */
 
-//TODO crush after method delete all notes
+
+//TODO new alertdialog with text create notes by clicking plus button..
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
@@ -53,11 +52,9 @@ public class MainActivity extends AppCompatActivity
 
     public static final int ACTIVITY_MAIN = R.layout.activity_main;
     private static final int EDITOR_REQUEST_CODE = 100;
-    private static final String PREFS_NAME = "myprefs";
 
 
     private NavigationView navigationView;
-    private TextView navHead;
     private TextView navMonth;
     private TextView navDay;
     private Boolean isFabOpen = false;
@@ -66,9 +63,8 @@ public class MainActivity extends AppCompatActivity
     DrawerMenuTrueHolder drawerMenuTrueHolder = new DrawerMenuTrueHolder();
     //adapter for listView;
     private android.widget.CursorAdapter cursorAdapter;
-    private RelativeLayout.LayoutParams lp;
     View layout;
-    TextView textCenter = null;
+    SharedPreferences preferences = null;
 
 
     @Override
@@ -78,6 +74,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = initToolbar();
         drawerMenuTrueHolder.setNav_note_true(true);
         initDrawerNav(toolbar);
+        detect_run_time();
         fabAnimate();
         View header = navigationView.getHeaderView(0);
         navMonth = (TextView) header.findViewById(R.id.txtMonth);
@@ -102,18 +99,46 @@ public class MainActivity extends AppCompatActivity
                 startActivityForResult(intent, EDITOR_REQUEST_CODE);
             }
         });
-
-
         getLoaderManager().initLoader(0, null, this);
-        CheckText();
 
+    }
+
+    private void detect_run_time() {
+
+        preferences = getSharedPreferences("myprefs", 0);
+        final SharedPreferences.Editor editor = preferences.edit();
+        boolean firstRun = preferences.getBoolean("first", true);
+        if (firstRun) {
+
+            DialogInterface.OnClickListener dialogClickListener =
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int button) {
+                            if (button == DialogInterface.BUTTON_POSITIVE) {
+                            } else if (button == DialogInterface.BUTTON_NEGATIVE) {
+                                finish();
+                                System.exit(0);
+                            } else if (button == DialogInterface.BUTTON_NEUTRAL) {
+                                editor.putBoolean("first", false);
+                                editor.commit();
+                            }
+                        }
+                    };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage((Html.fromHtml(getString(R.string.first_run_alert))))
+                    .setPositiveButton(getString(android.R.string.yes), dialogClickListener)
+                    .setNegativeButton(getString(android.R.string.no), dialogClickListener)
+                    .setNeutralButton(getString(R.string.no_more_show_first_run), dialogClickListener)
+                    .show();
+        }
 
     }
 
 
     private void ReloadCursor() {
         getLoaderManager().restartLoader(0, null, this);
-        CheckText();
+
 
 
     }
@@ -171,7 +196,7 @@ public class MainActivity extends AppCompatActivity
 
     public Toolbar initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Заметки");
+        toolbar.setTitle(R.string.notes);
         setSupportActionBar(toolbar);
         return toolbar;
     }
@@ -202,17 +227,17 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.delete_all_notes:
-                DeleteAllNotes();
-                ReloadCursor();
-                break;
             case R.id.add_sample_notes:
                 insertNote("sample note1");
-                insertNote("sample note2");
-                insertNote("sample note3");
+                insertNote("sample \nnote2");
+                insertNote("sample note3 which is longer than the others ");
                 ReloadCursor();
                 break;
-            case R.id.get_count_of_notes:
+            case R.id.delete_all_notes:
+                getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
+                ReloadCursor();
+                break;
+
 
         }
 
@@ -227,38 +252,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void CheckText() {
-        if (textCenter == null) {
-            textCenter = new TextView(this);
-        }
-        if (cursorAdapter.getCount() != 0) {
-
-            textCenter.setVisibility(View.GONE);
-
-        } else {
-            textCenter.setLayoutParams(new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT));
-            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) textCenter.getLayoutParams();
-            lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            lp.addRule(RelativeLayout.CENTER_VERTICAL);
-            textCenter.setLayoutParams(lp);
-            textCenter.setGravity(Gravity.BOTTOM);
-            textCenter.setText("Create Notes By Clicking The Plus Button");
-            textCenter.setWidth(600);
-            textCenter.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            textCenter.setTextSize(30);
-            //textCenter.setVisibility(View.VISIBLE);
-            textCenter.setTextColor(getResources().getColor(R.color.Grey));
-            ((RelativeLayout) layout).addView(textCenter);
-        }
-    }
 
 
-    private void DeleteAllNotes() {
-        getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
-        ReloadCursor();
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

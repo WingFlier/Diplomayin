@@ -15,9 +15,10 @@
         tools:ignore="ContentDescription" />
 
     <TextView
+        android:id="@+id/splash_screen_loading_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading ..."
+        android:text="@string/splash_screen_loading"
         android:textSize="24sp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

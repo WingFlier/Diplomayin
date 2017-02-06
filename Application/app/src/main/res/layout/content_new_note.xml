@@ -29,7 +29,7 @@
         android:ems="10"
         android:gravity="top"
         android:inputType="textMultiLine|textCapSentences"
-        android:hint="Enter here"
+        android:hint="@string/new_note_editText"
          />
 
     </ScrollView>

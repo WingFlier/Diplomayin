@@ -1,8 +1,5 @@
 package com.example.home.diplom.view;
 
-/**
- * Created by Home on 12/19/2016.
- */
 
 public class DrawerMenuTrueHolder {
     public boolean nav_note_true = false;

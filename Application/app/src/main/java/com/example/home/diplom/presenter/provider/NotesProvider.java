@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.CancellationSignal;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.home.diplom.model.DataBase;
 
@@ -27,7 +29,7 @@ public class NotesProvider extends ContentProvider {
 
     private static final UriMatcher uriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
-
+    //to indicate that existing note is being updated
     public static final String CONTENT_ITEM_TYPE = "Note";
 
     static {
@@ -56,11 +58,11 @@ public class NotesProvider extends ContentProvider {
 
         if (uriMatcher.match(uri) == NOTES_ID) {
             selection = DataBase.NOTE_ID + "=" + uri.getLastPathSegment();
-
         }
         return database.query(DataBase.TABLE_NOTES, DataBase.ALL_COLUMNS
                 , selection, null, null, null, DataBase.NOTE_CREATED
                         + " DESC");
+
     }
 
     @Nullable
@@ -89,11 +91,4 @@ public class NotesProvider extends ContentProvider {
     }
 
 
-    public int getRows() {
-        Cursor mCount = database.rawQuery("select count(*) from" + DataBase.TABLE_NOTES, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(1);
-        mCount.close();
-        return count;
-    }
 }

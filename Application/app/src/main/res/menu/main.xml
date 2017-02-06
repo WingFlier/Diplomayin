@@ -6,18 +6,18 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/delete_all_notes"
-        android:title="Delete all notes"
-        android:orderInCategory="101" />
+    <item android:title="@string/settings_for_developer">
+        <menu>
+            <item
+                android:id="@+id/add_sample_notes"
+                android:orderInCategory="102"
+                android:title="@string/add_some_sample_notes" />
 
-    <item
-        android:id="@+id/add_sample_notes"
-        android:title="Add some sample notes"
-        android:orderInCategory="102" />
+            <item
+                android:id="@+id/delete_all_notes"
+                android:orderInCategory="103"
+                android:title="@string/delete_all_notes" />
+        </menu>
+    </item>
 
-    <item
-        android:id="@+id/get_count_of_notes"
-        android:title="Get count of notes"
-        android:orderInCategory="103" />
 </menu>
