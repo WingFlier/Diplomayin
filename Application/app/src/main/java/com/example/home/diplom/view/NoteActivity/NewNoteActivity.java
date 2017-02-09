@@ -1,14 +1,19 @@
 package com.example.home.diplom.view.NoteActivity;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,7 +28,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private EditText editor;
     private String noteFilter;
     private String oldText;
-
+    private FloatingActionButton fab_new_note_edit;
 
 
     @Override
@@ -36,6 +41,22 @@ public class NewNoteActivity extends AppCompatActivity {
         editor = (EditText) findViewById(R.id.editText);
         Intent intent = getIntent();
         Uri uri = intent.getParcelableExtra(NotesProvider.CONTENT_ITEM_TYPE);
+        fab_new_note_edit = (FloatingActionButton) findViewById(R.id.fab_new_note);
+
+        fab_new_note_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fab_new_note_edit.setVisibility(View.GONE);
+                editor.setFocusable(true);
+                editor.setFocusableInTouchMode(true);
+                editor.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(editor, InputMethodManager.SHOW_FORCED);
+
+
+            }
+        });
+
 
         if (uri == null) {
             action = Intent.ACTION_INSERT;
@@ -60,17 +81,29 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     String newText;
+    boolean created = true;
+    int id;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         newText = editor.getText().toString().trim();
         switch (item.getItemId()) {
+            case R.id.note_save:
+                created = true;
+                finishEditing();
+                break;
             case R.id.note_delete:
-                if (newText.length() == 0) setResult(RESULT_CANCELED);
-                else deleteNote();
+                if (action == Intent.ACTION_EDIT) {
+                    deleteNote();
+                    id = 1;
+                } else
+                    setResult(RESULT_CANCELED);
+                created = false;
                 break;
             case R.id.note_discard:
-                setResult(RESULT_CANCELED);
+                id = 3;
+                finishEditing();
+                break;
         }
         finish();
         return super.onOptionsItemSelected(item);
@@ -84,6 +117,10 @@ public class NewNoteActivity extends AppCompatActivity {
             case Intent.ACTION_INSERT:
                 if (newText.length() == 0) {
                     setResult(RESULT_CANCELED);
+                } else if (newText.length() != 0 && !created) {
+                    break;
+                } else if (id == 3) {
+                    setResult(RESULT_CANCELED);
                 } else {
                     insertNote(newText);
                 }
@@ -91,7 +128,11 @@ public class NewNoteActivity extends AppCompatActivity {
             case Intent.ACTION_EDIT:
                 if (newText.length() == 0) {
                     deleteNote();
+                } else if (newText.length() != 0 && id == 1) {
+                    break;
                 } else if (oldText.equals(newText)) {
+                    setResult(RESULT_CANCELED);
+                } else if (id == 3) {
                     setResult(RESULT_CANCELED);
                 } else {
                     updateNote(newText);
@@ -114,7 +155,7 @@ public class NewNoteActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(DataBase.NOTE_TEXT, note);
         getContentResolver().update(NotesProvider.CONTENT_URI, values, noteFilter, null);
-        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
     }
 
@@ -137,4 +178,6 @@ public class NewNoteActivity extends AppCompatActivity {
         finishEditing();
         super.onStop();
     }
+
+
 }

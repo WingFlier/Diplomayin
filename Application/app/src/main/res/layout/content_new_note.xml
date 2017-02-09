@@ -13,18 +13,14 @@
     tools:context="com.example.home.diplom.view.NoteActivity.NewNoteActivity"
     tools:showIn="@layout/activity_new_note">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
     <EditText
+        android:focusable="false"
         android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
         android:ems="10"
         android:gravity="top"
@@ -32,5 +28,17 @@
         android:hint="@string/new_note_editText"
          />
 
-    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_note"
+        android:layout_width="56dp"
+        android:layout_height="@dimen/fab_size"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="@dimen/fab_margin1"
+        app:backgroundTint="@color/colorFAB2"
+        android:src="@mipmap/ic_pencil"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+
 </RelativeLayout>

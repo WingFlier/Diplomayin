@@ -91,8 +91,10 @@ public class MainActivity extends AppCompatActivity
         cursorAdapter = new NotesCursorAdapter(this, null, 0);
         list.setAdapter(cursorAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                fab.setVisibility(View.GONE);
                 Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
                 Uri uri = Uri.parse(NotesProvider.CONTENT_URI + "/" + id);
                 intent.putExtra(NotesProvider.CONTENT_ITEM_TYPE, uri);
@@ -181,6 +183,7 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
             ReloadCursor();
+            fab.setVisibility(View.VISIBLE);
         }
     }
 
