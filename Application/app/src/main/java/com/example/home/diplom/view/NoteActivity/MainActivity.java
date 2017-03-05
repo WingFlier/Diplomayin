@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity
                 Uri uri = Uri.parse(NotesProvider.CONTENT_URI + "/" + id);
                 intent.putExtra(NotesProvider.CONTENT_ITEM_TYPE, uri);
                 startActivityForResult(intent, EDITOR_REQUEST_CODE);
+                Log.d("notess", "on click position " + String.valueOf(position) + " id " + String.valueOf(id));
             }
         });
         getLoaderManager().initLoader(0, null, this);
@@ -183,8 +184,8 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
             ReloadCursor();
-            fab.setVisibility(View.VISIBLE);
         }
+        fab.setVisibility(View.VISIBLE);
     }
 
     private void initDrawerNav(Toolbar toolbar) {
@@ -230,12 +231,12 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.add_sample_notes:
+           /* case R.id.add_sample_notes:
                 insertNote("sample note1");
                 insertNote("sample \nnote2");
                 insertNote("sample note3 which is longer than the others ");
                 ReloadCursor();
-                break;
+                break;*/
             case R.id.delete_all_notes:
                 getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
                 ReloadCursor();

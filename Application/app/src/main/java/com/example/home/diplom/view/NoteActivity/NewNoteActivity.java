@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -62,6 +61,7 @@ public class NewNoteActivity extends AppCompatActivity {
             action = Intent.ACTION_INSERT;
             setTitle(R.string.new_note_activity);
         } else {
+            setTitle(R.string.old_note_activity);
             action = Intent.ACTION_EDIT;
             noteFilter = DataBase.NOTE_ID + "=" + uri.getLastPathSegment();
 
@@ -105,6 +105,9 @@ public class NewNoteActivity extends AppCompatActivity {
                 finishEditing();
                 break;
         }
+        ((InputMethodManager) NewNoteActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(editor
+                        .getWindowToken(), 0);
         finish();
         return super.onOptionsItemSelected(item);
     }
@@ -170,12 +173,14 @@ public class NewNoteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finishEditing();
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
     @Override
     protected void onStop() {
-        finishEditing();
+        setResult(RESULT_CANCELED);
+        finish();
         super.onStop();
     }
 
