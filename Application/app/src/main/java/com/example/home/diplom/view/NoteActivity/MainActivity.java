@@ -334,7 +334,7 @@ public class MainActivity extends AppCompatActivity
             fab1.setClickable(true);
             fab2.setClickable(true);
             isFabOpen = true;
-            Log.d("str", "open");
+
         }
     }
 
@@ -357,5 +357,10 @@ public class MainActivity extends AppCompatActivity
         cursorAdapter.swapCursor(null);
     }
 
-
+    @Override
+    protected void onResume()
+    {
+        ReloadCursor();
+        super.onResume();
+    }
 }

@@ -28,6 +28,7 @@
     <string name="save_note">Save</string>
     <string name="old_note_activity">Note</string>
     <string name="new_reminder_title">New Reminder</string>
+    <string name="old_reminder_title">Reminder</string>
     <string name="title_activity_new_reminder">New Reminder</string>
     <string name="spinner_category_select">Select Category</string>
 
@@ -43,4 +44,6 @@
     <string name="spinner_repeat_1week">Every week</string>
     <string name="spinner_repeat_1year">Every year</string>
     <string name="spinner_repeat_once">Once</string>
+    <string name="new_reminder_date">Change Date</string>
+    <string name="new_reminder_time">Change Time</string>
 </resources>

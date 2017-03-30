@@ -16,7 +16,7 @@
         android:title="@string/delete_note"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/note_discard"
+        android:id="@+id/rem_discard"
         tools:ignore="AppCompatResource"
         android:orderInCategory="101"
         android:showAsAction="ifRoom"

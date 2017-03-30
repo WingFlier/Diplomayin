@@ -118,8 +118,7 @@ public class NewNoteActivity extends AppCompatActivity
                 break;
         }
         ((InputMethodManager) NewNoteActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(editor
-                        .getWindowToken(), 0);
+                .hideSoftInputFromWindow(editor.getWindowToken(), 0);
         finish();
         return super.onOptionsItemSelected(item);
     }
@@ -127,8 +126,6 @@ public class NewNoteActivity extends AppCompatActivity
     private void finishEditing()
     {
         newText = editor.getText().toString().trim();
-
-
         switch (action)
         {
             case Intent.ACTION_INSERT:

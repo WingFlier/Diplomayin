@@ -6,6 +6,7 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +28,7 @@ import com.example.home.diplom.presenter.provider.Reminder.ReminderProvider;
 import com.example.home.diplom.view.AboutActivity.AboutActivity;
 import com.example.home.diplom.view.CommonMethods;
 import com.example.home.diplom.view.DrawerMenuTrueHolder;
+import com.example.home.diplom.view.NoteActivity.NewNoteActivity;
 
 public class ReminderActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -41,6 +44,7 @@ public class ReminderActivity extends AppCompatActivity implements
     private TextView navDay;
     private android.widget.CursorAdapter cursorAdapterReminder;
     ListView listViewRem;
+    public static final int REMINDER_REQUEST_CODE = 101;
 
 
     @Override
@@ -62,8 +66,39 @@ public class ReminderActivity extends AppCompatActivity implements
         listViewRem = (ListView) findViewById(android.R.id.list);
         cursorAdapterReminder = new ReminderCursorAdapter(this, null, 0);
         listViewRem.setAdapter(cursorAdapterReminder);
+        listViewRem.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                //maybe make fab invisisble
+                Intent intent = new Intent(ReminderActivity.this, NewReminderActivity.class);
+                Uri uri = Uri.parse(ReminderProvider.CONTENT_URI + "/" + id);
+                intent.putExtra(ReminderProvider.CONTENT_ITEM_TYPE, uri);
+                startActivityForResult(intent, REMINDER_REQUEST_CODE);
+            }
+        });
         getLoaderManager().initLoader(0, null, this);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == REMINDER_REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            ReloadCursor();
+        }
+        //maybe make fab visible here
+    }
+
+    @Override
+    protected void onResume()
+    {
+        ReloadCursor();
+        super.onResume();
     }
 
     private void insertNote(String content, String category, String Time)
@@ -98,8 +133,9 @@ public class ReminderActivity extends AppCompatActivity implements
         {
             case R.id.add_sample_notes:
                 insertNote("TODO thing for doing very long text you know for what", "Other", "2017-02-15");
-                insertNote("congratulate", "BirthDay", "2000-04-25");
-                insertNote("Smth", "Personal", "2017-02-15");
+                insertNote("congratulate", "Другие", "2000-04-25");
+                insertNote("Smth", "Дни рождения", "2017-02-15");
+                insertNote("что-то", "Персональные", "2017-02-15");
                 ReloadCursor();
                 break;
             case R.id.delete_all_notes:
@@ -110,6 +146,7 @@ public class ReminderActivity extends AppCompatActivity implements
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
