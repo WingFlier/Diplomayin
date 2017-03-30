@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+    <RelativeLayout
+        android:background="@color/lightGray"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_bookmark"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:id="@+id/txtReminderContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="ReminderContent"
+            android:textSize="18sp"
+            android:layout_marginStart="35dp"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/txtCategory"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textSize="10pt"
+            android:maxLines="1"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/txtReminderContent"/>
+
+        <TextView
+            android:id="@+id/txtAlarmTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AlarmTime"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"/>
+
+    </RelativeLayout>
+</RelativeLayout>

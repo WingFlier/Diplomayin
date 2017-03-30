@@ -19,11 +19,28 @@
     <string name="personal">Personal</string>
     <string name="birthdays">Birthdays</string>
     <string name="other">Other</string>
+    <string name="completed">Сompleted</string>
     <string name="other_sub_menu">Other</string>
     <string name="about_app">About App</string>
     <string name="new_note_activity">New Note</string>
     <string name="new_note_editText">Enter here</string>
-    <string name="splash_screen_loading">Loading</string>
-    <string name="save_note">Сохранить</string>
+    <string name="splash_screen_loading">Loading...</string>
+    <string name="save_note">Save</string>
     <string name="old_note_activity">Note</string>
+    <string name="new_reminder_title">New Reminder</string>
+    <string name="title_activity_new_reminder">New Reminder</string>
+    <string name="spinner_category_select">Select Category</string>
+
+    <!--spinner-->
+    <string name="spinner_personal">Personal</string>
+    <string name="spinner_birthDays">Birth Days</string>
+    <string name="spinner_other">Other</string>
+    <string name="spinner_completed">Completed</string>
+    <string name="reminder_add_date_button">Add Date</string>
+    <string name="reminder_add_time_button">Add Time</string>
+    <string name="spinner_repeat_15min">Every 15 minutes</string>
+    <string name="spinner_repeat_1day">Every day</string>
+    <string name="spinner_repeat_1week">Every week</string>
+    <string name="spinner_repeat_1year">Every year</string>
+    <string name="spinner_repeat_once">Once</string>
 </resources>

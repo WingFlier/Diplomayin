@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerItemsCategory">
+        <item>@string/spinner_personal</item>
+        <item>@string/birthdays</item>
+        <item>@string/spinner_other</item>
+    </string-array>
+
+    <string-array name="spinnerItemsRepeat">
+        <item>@string/spinner_repeat_once</item>
+        <item>@string/spinner_repeat_15min</item>
+        <item>@string/spinner_repeat_1day</item>
+        <item>@string/spinner_repeat_1week</item>
+        <item>@string/spinner_repeat_1year</item>
+    </string-array>
+</resources>

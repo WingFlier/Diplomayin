@@ -21,9 +21,17 @@
         android:layout_margin="4dp"
         android:layout_toEndOf="@+id/imageDocIcon"
         android:layout_toRightOf="@+id/imageDocIcon"
-        android:singleLine="true"
+        android:maxLines="1"
         android:text="Dummy Text"
         android:textColor="@color/note_list_item"
         android:textSize="18sp" />
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTime"
+        android:layout_below="@+id/tvNote"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

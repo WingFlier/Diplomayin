@@ -1,4 +1,4 @@
-package com.example.home.diplom.presenter.provider;
+package com.example.home.diplom.presenter.provider.Note;
 
 
 import android.content.Context;
@@ -12,33 +12,42 @@ import android.widget.TextView;
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
 
-public class NotesCursorAdapter extends CursorAdapter {
-    public NotesCursorAdapter(Context context, Cursor c, int flags) {
+public class NotesCursorAdapter extends CursorAdapter
+{
+    public NotesCursorAdapter(Context context, Cursor c, int flags)
+    {
         super(context, c, flags);
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+    public View newView(Context context, Cursor cursor, ViewGroup parent)
+    {
         return LayoutInflater.from(context).inflate(
                 R.layout.note_list_item, parent, false
         );
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, Context context, Cursor cursor)
+    {
         String noteText = cursor.getString(cursor.getColumnIndex(DataBase.NOTE_TEXT));
+        String noteTime = cursor.getString(cursor.getColumnIndex(DataBase.NOTE_CREATED));
 
         int pos = noteText.indexOf(10);
-        if (pos != -1) {
+        if (pos != -1)
+        {
             noteText = noteText.substring(0, pos) + "...";
         }
 
         TextView tv = (TextView) view.findViewById(R.id.tvNote);
+        TextView tvTime = (TextView) view.findViewById(R.id.tvTime);
         tv.setText(noteText);
+        tvTime.setText(noteTime);
     }
 
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         return super.getCount();
     }
 

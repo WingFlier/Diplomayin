@@ -27,6 +27,10 @@
                 android:id="@+id/nav_other"
                 android:icon="@mipmap/ic_bookmark"
                 android:title="@string/other" />
+            <item
+                android:id="@+id/nav_completed"
+                android:icon="@mipmap/ic_bookmark"
+                android:title="@string/completed"/>
 
         </menu>
     </item>
