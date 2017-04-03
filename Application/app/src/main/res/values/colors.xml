@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF0096A6</color>
-    <color name="colorAccent">#FF0096A6</color>
+    <color name="colorPrimary">#0095a5</color>
+    <color name="colorAccent">#0096a6</color>
     <color name="WHITE">#fff</color>
     <color name="Grey">#c4c4c4</color>
     <color name="note_list_item">#747474</color>
-    <color name="splashColor">#afafaf</color>
+    <color name="reminder_list_item">#e9dae9</color>
+    <color name="splashColor">#CCCCCC</color>
     <color name="colorFAB2">#766975</color>
     <color name="colorFAB1">#766975</color>
     <color name="lightGray">#f5f5f5</color>
+    <color name="lighterGray">#e7e7e7</color>
 </resources>

@@ -3,6 +3,7 @@ package com.example.home.diplom.model;
 
 import android.content.Context;
 import android.content.pm.ProviderInfo;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -98,9 +99,9 @@ public class DataBase extends SQLiteOpenHelper
         //Reminder
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMIND);
         onCreate(db);
-
-
     }
+
+
 
 
 }

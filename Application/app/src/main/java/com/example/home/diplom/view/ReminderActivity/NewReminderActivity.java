@@ -90,8 +90,7 @@ public class NewReminderActivity extends AppCompatActivity
             buttonTime.setText(R.string.new_reminder_time);
             action = Intent.ACTION_EDIT;
             reminderFilter = DataBase.REMINDER_ID + "=" + uri.getLastPathSegment();
-            Cursor cursor = getContentResolver().query(uri, DataBase.ALL_COLUMNS_REMINDER, reminderFilter
-                    , null, null);
+            Cursor cursor = getContentResolver().query(uri, DataBase.ALL_COLUMNS_REMINDER, reminderFilter, null, null);
             cursor.moveToFirst();
             oldText = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_TEXT));
             oldDateTime = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_ALARM_TIME));

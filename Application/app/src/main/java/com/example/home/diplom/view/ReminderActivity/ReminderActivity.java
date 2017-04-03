@@ -28,7 +28,11 @@ import com.example.home.diplom.presenter.provider.Reminder.ReminderProvider;
 import com.example.home.diplom.view.AboutActivity.AboutActivity;
 import com.example.home.diplom.view.CommonMethods;
 import com.example.home.diplom.view.DrawerMenuTrueHolder;
-import com.example.home.diplom.view.NoteActivity.NewNoteActivity;
+import com.example.home.diplom.view.NoteActivity.MainActivity;
+import com.example.home.diplom.view.ReminderActivity.Category.category_birthdays;
+import com.example.home.diplom.view.ReminderActivity.Category.category_completed;
+import com.example.home.diplom.view.ReminderActivity.Category.category_other;
+import com.example.home.diplom.view.ReminderActivity.Category.category_personal;
 
 public class ReminderActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -68,8 +72,6 @@ public class ReminderActivity extends AppCompatActivity implements
         listViewRem.setAdapter(cursorAdapterReminder);
         listViewRem.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
-
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
@@ -82,9 +84,10 @@ public class ReminderActivity extends AppCompatActivity implements
         });
         getLoaderManager().initLoader(0, null, this);
 
+
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (requestCode == REMINDER_REQUEST_CODE && resultCode == RESULT_OK)
@@ -92,7 +95,7 @@ public class ReminderActivity extends AppCompatActivity implements
             ReloadCursor();
         }
         //maybe make fab visible here
-    }
+    }*/
 
     @Override
     protected void onResume()
@@ -176,6 +179,22 @@ public class ReminderActivity extends AppCompatActivity implements
                 intent = new Intent(ReminderActivity.this, AboutActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_personal:
+                intent = new Intent(ReminderActivity.this, category_personal.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_birthday:
+                intent = new Intent(ReminderActivity.this, category_birthdays.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_other:
+                intent = new Intent(ReminderActivity.this, category_other.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_completed:
+                intent = new Intent(ReminderActivity.this, category_completed.class);
+                startActivity(intent);
+                break;
         }
 
 
@@ -218,13 +237,6 @@ public class ReminderActivity extends AppCompatActivity implements
         }
 
     }
-
-  /*  @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }*/
 
     /**
      * Reminder Activity Fab click

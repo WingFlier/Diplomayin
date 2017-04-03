@@ -28,6 +28,7 @@ public class ReminderCursorAdapter extends CursorAdapter
         return LayoutInflater.from(context).inflate(R.layout.reminder_list_item, parent, false);
     }
 
+
     @Override
     public void bindView(View view, Context context, Cursor cursor)
     {

@@ -36,6 +36,10 @@ import com.example.home.diplom.presenter.provider.Note.NotesProvider;
 import com.example.home.diplom.view.AboutActivity.AboutActivity;
 import com.example.home.diplom.view.CommonMethods;
 import com.example.home.diplom.view.DrawerMenuTrueHolder;
+import com.example.home.diplom.view.ReminderActivity.Category.category_birthdays;
+import com.example.home.diplom.view.ReminderActivity.Category.category_completed;
+import com.example.home.diplom.view.ReminderActivity.Category.category_other;
+import com.example.home.diplom.view.ReminderActivity.Category.category_personal;
 import com.example.home.diplom.view.ReminderActivity.NewReminderActivity;
 import com.example.home.diplom.view.ReminderActivity.ReminderActivity;
 
@@ -251,12 +255,12 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (id)
         {
-           /* case R.id.add_sample_notes:
+            case R.id.add_sample_notes:
                 insertNote("sample note1");
                 insertNote("sample \nnote2");
                 insertNote("sample note3 which is longer than the others ");
                 ReloadCursor();
-                break;*/
+                break;
             case R.id.delete_all_notes:
                 //TODO maybe using delete method can delete specific note giving its id
                 getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
@@ -307,6 +311,22 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_about:
                 intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_personal:
+                intent = new Intent(MainActivity.this, category_personal.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_birthday:
+                intent = new Intent(MainActivity.this, category_birthdays.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_other:
+                intent = new Intent(MainActivity.this, category_other.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_completed:
+                intent = new Intent(MainActivity.this, category_completed.class);
                 startActivity(intent);
                 break;
         }

@@ -4,27 +4,22 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/icon"
+        android:icon="@drawable/launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.NoteActivity.MainActivity"
             android:label="@string/title_activity_main22"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".view.SplashScreen.SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".view.ReminderActivity.ReminderActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-
         <provider
             android:name=".presenter.provider.Note.NotesProvider"
             android:authorities="com.wingfly.home.diplom.notesprovider"
@@ -33,7 +28,6 @@
             android:name=".presenter.provider.Reminder.ReminderProvider"
             android:authorities="com.wingfly.home.diplom.reminderprovider"
             android:exported="false"/>
-
 
         <activity
             android:name=".view.NoteActivity.NewNoteActivity"
@@ -53,8 +47,26 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:parentActivityName=".view.ReminderActivity.ReminderActivity"
+                android:theme="@style/AppTheme.NoActionBar"
                 android:value="com.example.home.diplom.view.ReminderActivity.ReminderActivity"/>
         </activity>
+        <activity
+            android:name=".view.ReminderActivity.Category.category_personal"
+            android:label="@string/spinner_personal"
+            android:parentActivityName=".view.ReminderActivity.ReminderActivity"/>
+        <activity
+            android:name=".view.ReminderActivity.Category.category_birthdays"
+            android:label="@string/spinner_birthDays"
+            android:parentActivityName=".view.ReminderActivity.ReminderActivity"/>
+        <activity
+            android:name=".view.ReminderActivity.Category.category_other"
+            android:label="@string/spinner_other"
+            android:parentActivityName=".view.ReminderActivity.ReminderActivity"/>
+        <activity
+            android:name=".view.ReminderActivity.Category.category_completed"
+            android:label="@string/spinner_completed"
+            android:parentActivityName=".view.ReminderActivity.ReminderActivity"/>
     </application>
 
 </manifest>
