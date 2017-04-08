@@ -25,7 +25,7 @@ public class DataBase extends SQLiteOpenHelper
      **************/
     public static final String NOTE_ID = "_id";
     public static final String NOTE_TEXT = "noteText";
-    public static final String NOTE_CREATED = "noteCreated";
+    public static final String NOTE_TIME = "noteTime";
 
 
     /********
@@ -35,7 +35,7 @@ public class DataBase extends SQLiteOpenHelper
             "CREATE TABLE " + TABLE_NOTES + " (" +
                     NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     NOTE_TEXT + " TEXT, " +
-                    NOTE_CREATED + " DATETIME  DEFAULT CURRENT_TIMESTAMP)";
+                    NOTE_TIME + " TEXT)";
 
     /*************Reminder*****************/
 
@@ -51,6 +51,7 @@ public class DataBase extends SQLiteOpenHelper
     public static final String REMINDER_TEXT = "reminderContent";
     public static final String REMINDER_CATEGORY = "reminderCategory";
     public static final String REMINDER_ALARM_TIME = "reminderAlarmTime";
+    public static final String REMINDER_REPEAT_TIME = "reminderRepeatTime";
     public static final String REMINDER_CREATED = "reminderCreated";
 
     /**********
@@ -62,6 +63,7 @@ public class DataBase extends SQLiteOpenHelper
                     + REMINDER_TEXT + " TEXT, "
                     + REMINDER_CATEGORY + " TEXT, "
                     + REMINDER_ALARM_TIME + " TEXT, "
+                    + REMINDER_REPEAT_TIME + " TEXT, "
                     + REMINDER_CREATED + " TEXT default CURRENT_TIMESTAMP)";
 
 
@@ -70,11 +72,12 @@ public class DataBase extends SQLiteOpenHelper
      */
     public static final String[] ALL_COLUMNS_REMINDER = {
             REMINDER_ID, REMINDER_TEXT, REMINDER_CATEGORY,
-            REMINDER_ALARM_TIME, REMINDER_CREATED};
+            REMINDER_ALARM_TIME, REMINDER_REPEAT_TIME, REMINDER_CREATED
+    };
     /********
      * NOTES
      ********/
-    public static final String[] ALL_COLUMNS_NOTE = {NOTE_ID, NOTE_TEXT, NOTE_CREATED};
+    public static final String[] ALL_COLUMNS_NOTE = {NOTE_ID, NOTE_TEXT, NOTE_TIME};
 
     public DataBase(Context context)
     {
@@ -100,6 +103,4 @@ public class DataBase extends SQLiteOpenHelper
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMIND);
         onCreate(db);
     }
-
-
 }

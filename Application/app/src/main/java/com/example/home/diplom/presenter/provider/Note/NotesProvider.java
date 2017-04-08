@@ -64,7 +64,7 @@ public class NotesProvider extends ContentProvider
             selection = DataBase.NOTE_ID + "=" + uri.getLastPathSegment();
         }
         return database.query(DataBase.TABLE_NOTES, DataBase.ALL_COLUMNS_NOTE
-                , selection, null, null, null, DataBase.NOTE_CREATED
+                , selection, null, null, null, DataBase.NOTE_ID
                         + " DESC");
         /*return database.query(DataBase.TABLE_NOTES, DataBase.ALL_COLUMNS
                 , selection, null, null, null,  DataBase.NOTE_ID  + " DESC");*/

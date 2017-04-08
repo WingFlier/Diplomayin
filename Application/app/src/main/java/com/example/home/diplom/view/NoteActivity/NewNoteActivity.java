@@ -21,6 +21,9 @@ import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
 import com.example.home.diplom.presenter.provider.Note.NotesProvider;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class NewNoteActivity extends AppCompatActivity
 {
 
@@ -30,6 +33,8 @@ public class NewNoteActivity extends AppCompatActivity
     private String noteFilter;
     private String oldText;
     private FloatingActionButton fab_new_note_edit;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Date date = new Date();
 
 
     @Override
@@ -179,6 +184,7 @@ public class NewNoteActivity extends AppCompatActivity
     {
         ContentValues values = new ContentValues();
         values.put(DataBase.NOTE_TEXT, note);
+        values.put(DataBase.NOTE_TIME, dateFormat.format(date));
         getContentResolver().update(NotesProvider.CONTENT_URI, values, noteFilter, null);
         Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
@@ -188,6 +194,7 @@ public class NewNoteActivity extends AppCompatActivity
     {
         ContentValues values = new ContentValues();
         values.put(DataBase.NOTE_TEXT, note);
+        values.put(DataBase.NOTE_TIME, dateFormat.format(date));
         getContentResolver().insert(NotesProvider.CONTENT_URI, values);
         setResult(RESULT_OK);
         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();

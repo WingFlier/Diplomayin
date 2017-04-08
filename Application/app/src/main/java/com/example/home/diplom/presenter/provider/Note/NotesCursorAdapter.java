@@ -31,7 +31,7 @@ public class NotesCursorAdapter extends CursorAdapter
     public void bindView(View view, Context context, Cursor cursor)
     {
         String noteText = cursor.getString(cursor.getColumnIndex(DataBase.NOTE_TEXT));
-        String noteTime = cursor.getString(cursor.getColumnIndex(DataBase.NOTE_CREATED));
+        String noteTime = cursor.getString(cursor.getColumnIndex(DataBase.NOTE_TIME));
 
         int pos = noteText.indexOf(10);
         if (pos != -1)

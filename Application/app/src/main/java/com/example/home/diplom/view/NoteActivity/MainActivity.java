@@ -49,6 +49,9 @@ import com.example.home.diplom.view.ReminderActivity.Category.category_personal;
 import com.example.home.diplom.view.ReminderActivity.NewReminderActivity;
 import com.example.home.diplom.view.ReminderActivity.ReminderActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author Tiko :)
  */
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity
     SharedPreferences preferences = null;
     ListView list;
     TextView note_empty;
+
 
 
 
@@ -312,6 +316,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.delete_all_notes:
                 getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
                 ReloadCursor();
+                check();
                 break;
         }
         return super.onOptionsItemSelected(item);

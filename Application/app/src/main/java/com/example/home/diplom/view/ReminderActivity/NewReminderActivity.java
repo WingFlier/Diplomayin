@@ -35,6 +35,7 @@ public class NewReminderActivity extends AppCompatActivity
     TextView buttonDate;
     TextView buttonTime;
     Spinner spinner_category;
+    Spinner spinner_repeat;
     Calendar dateAndTime = Calendar.getInstance();
     EditText txtNewRem;
 
@@ -43,6 +44,7 @@ public class NewReminderActivity extends AppCompatActivity
     private String oldText;
     private String oldDateTime;
     private String oldSpinnerCategory;
+    private String oldSpinnerRepeat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,16 +56,26 @@ public class NewReminderActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         spinner_category = (Spinner) findViewById(R.id.spinner_category);
+        spinner_repeat = (Spinner) findViewById(R.id.spinner_repeat);
         txtNewRem = (EditText) findViewById(R.id.editText2);
         buttonDate = (TextView) findViewById(R.id.buttonDate);
         buttonTime = (TextView) findViewById(R.id.buttonTime);
         buttonResult = (TextView) findViewById(R.id.DateTimeRes);
 
-        String[] categories_compare = {
-                getString(R.string.spinner_personal),
-                getString(R.string.spinner_birthDays),
-                getString(R.string.spinner_other)
-        };
+        String[] categories_compare =
+                {
+                        getString(R.string.spinner_personal),
+                        getString(R.string.spinner_birthDays),
+                        getString(R.string.spinner_other)
+                };
+        String[] reminder_repeat =
+                {
+                        getString(R.string.spinner_repeat_once),
+                        getString(R.string.spinner_repeat_15min),
+                        getString(R.string.spinner_repeat_1day),
+                        getString(R.string.spinner_repeat_1week),
+                        getString(R.string.spinner_repeat_1year)
+                };
 
         txtNewRem.setOnTouchListener(new View.OnTouchListener()
         {
@@ -77,7 +89,6 @@ public class NewReminderActivity extends AppCompatActivity
         });
         Intent intent = getIntent();
         Uri uri = intent.getParcelableExtra(ReminderProvider.CONTENT_ITEM_TYPE);
-        // Log.d("strollol", "uri is: " + uri);
         if (uri == null)
         {
             action = Intent.ACTION_INSERT;
@@ -95,6 +106,7 @@ public class NewReminderActivity extends AppCompatActivity
             oldText = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_TEXT));
             oldDateTime = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_ALARM_TIME));
             oldSpinnerCategory = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_CATEGORY));
+            oldSpinnerRepeat = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_REPEAT_TIME));
             buttonResult.setText(oldDateTime);
             txtNewRem.setText(oldText);
             txtNewRem.requestFocus();
@@ -106,14 +118,18 @@ public class NewReminderActivity extends AppCompatActivity
                     spinner_category.setSelection(i);
                     break;
                 }
-
+                if (oldSpinnerRepeat.equals(reminder_repeat[i]))
+                {
+                    spinner_repeat.setSelection(i);
+                    break;
+                }
             }
         }
     }
 
     boolean creating = true;
     int id;
-    String newText, newCategory, newTime;
+    String newText, newCategory, newTime, newRepeat;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -149,6 +165,7 @@ public class NewReminderActivity extends AppCompatActivity
         newText = txtNewRem.getText().toString().trim();
         newTime = buttonResult.getText().toString().trim();
         newCategory = spinner_category.getSelectedItem().toString();
+        newRepeat = spinner_repeat.getSelectedItem().toString();
 
         switch (action)
         {
@@ -165,7 +182,7 @@ public class NewReminderActivity extends AppCompatActivity
                     setResult(RESULT_CANCELED);
                 } else
                 {
-                    insertReminder(newText, newTime, newCategory);
+                    insertReminder(newText, newTime, newCategory, newRepeat);
                     break;
                 }
                 break;
@@ -179,7 +196,7 @@ public class NewReminderActivity extends AppCompatActivity
                 else if (id == 3)
                     setResult(RESULT_CANCELED);
                 else
-                    updateReminder(newText, newTime, newCategory);
+                    updateReminder(newText, newTime, newCategory, newRepeat);
                 break;
         }
         finish();
@@ -187,23 +204,25 @@ public class NewReminderActivity extends AppCompatActivity
     }
 
 
-    private void insertReminder(String newText, String newTime, String newCategory)
+    private void insertReminder(String newText, String newTime, String newCategory, String newRepeat)
     {
         ContentValues values = new ContentValues();
         values.put(DataBase.REMINDER_TEXT, newText);
         values.put(DataBase.REMINDER_ALARM_TIME, newTime);
         values.put(DataBase.REMINDER_CATEGORY, newCategory);
+        values.put(DataBase.REMINDER_REPEAT_TIME, newRepeat);
         getContentResolver().insert(ReminderProvider.CONTENT_URI, values);
         setResult(RESULT_OK);
         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
     }
 
-    private void updateReminder(String newText, String newTime, String newCategory)
+    private void updateReminder(String newText, String newTime, String newCategory, String newRepeat)
     {
         ContentValues values = new ContentValues();
         values.put(DataBase.REMINDER_TEXT, newText);
         values.put(DataBase.REMINDER_ALARM_TIME, newTime);
         values.put(DataBase.REMINDER_CATEGORY, newCategory);
+        values.put(DataBase.REMINDER_REPEAT_TIME, newRepeat);
         getContentResolver().update(ReminderProvider.CONTENT_URI, values, reminderFilter, null);
         Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);

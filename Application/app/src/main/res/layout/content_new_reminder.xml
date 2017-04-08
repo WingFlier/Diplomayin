@@ -111,7 +111,7 @@
             android:prompt="@string/spinner_category_select"/>
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/spinner_repeat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"

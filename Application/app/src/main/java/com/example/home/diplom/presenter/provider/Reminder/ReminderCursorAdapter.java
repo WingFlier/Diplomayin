@@ -34,15 +34,18 @@ public class ReminderCursorAdapter extends CursorAdapter
     {
         TextView txtCategory = (TextView) view.findViewById(R.id.txtCategory);
         TextView txtReminderContent = (TextView) view.findViewById(R.id.txtReminderContent);
+        TextView txtReminderRepeat = (TextView) view.findViewById(R.id.textRepeat);
         TextView txtAlarmTime = (TextView) view.findViewById(R.id.txtAlarmTime);
 
         String reminderCategory = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_CATEGORY));
+        String reminderRepeat = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_REPEAT_TIME));
         String reminderContent = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_TEXT));
         String reminderAlarmTime = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_ALARM_TIME));
 
         txtCategory.setText(reminderCategory);
         txtReminderContent.setText(reminderContent);
         txtAlarmTime.setText(reminderAlarmTime);
+        txtReminderRepeat.setText(reminderRepeat);
     }
 
     @Override

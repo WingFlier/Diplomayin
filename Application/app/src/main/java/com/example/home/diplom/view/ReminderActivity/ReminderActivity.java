@@ -160,7 +160,6 @@ public class ReminderActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -174,6 +173,7 @@ public class ReminderActivity extends AppCompatActivity implements
             case R.id.delete_all_notes:
                 getContentResolver().delete(ReminderProvider.CONTENT_URI, null, null);
                 ReloadCursor();
+                check();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -183,7 +183,6 @@ public class ReminderActivity extends AppCompatActivity implements
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
     {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         Intent intent;
 
