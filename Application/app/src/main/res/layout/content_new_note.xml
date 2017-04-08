@@ -13,7 +13,10 @@
     tools:context="com.example.home.diplom.view.NoteActivity.NewNoteActivity"
     tools:showIn="@layout/activity_new_note">
 
-
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0">
     <EditText
         android:focusable="false"
         android:id="@+id/editText"
@@ -25,8 +28,8 @@
         android:ems="10"
         android:gravity="top"
         android:inputType="textMultiLine|textCapSentences"
-        android:hint="@string/new_note_editText"
-         />
+        android:hint="@string/new_note_editText"/>
+    </android.support.design.widget.TextInputLayout>
 
 
     <android.support.design.widget.FloatingActionButton

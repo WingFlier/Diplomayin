@@ -46,4 +46,8 @@
     <string name="spinner_repeat_once">Once</string>
     <string name="new_reminder_date">Change Date</string>
     <string name="new_reminder_time">Change Time</string>
+    <string name="reminder_empty">Create new reminder</string>
+    <string name="note_empty">Create new note</string>
+    <string name="long_press_open">Open</string>
+    <string name="long_press_delete">Delete</string>
 </resources>

@@ -13,13 +13,19 @@
     tools:context="com.example.home.diplom.view.NoteActivity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-
-
-
    <ListView
        android:layout_width="match_parent"
        android:layout_height="540dp"
        android:id="@+id/android:list" />
+
+    <TextView
+        android:id="@+id/note_empty"
+        android:text="@string/note_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

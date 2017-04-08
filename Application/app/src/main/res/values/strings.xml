@@ -47,6 +47,10 @@
     <string name="spinner_repeat_1week">Раз в неделю</string>
     <string name="spinner_repeat_1year">Раз в год</string>
     <string name="old_reminder_title">Напоминание</string>
+    <string name="note_empty">Создайте новую заметку</string>
+    <string name="reminder_empty">Создайте новое напоминание</string>
+    <string name="long_press_open">Открыть</string>
+    <string name="long_press_delete">Удалить</string>
 
 
 </resources>

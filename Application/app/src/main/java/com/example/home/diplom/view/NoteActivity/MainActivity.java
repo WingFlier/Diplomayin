@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,14 +22,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
@@ -52,11 +58,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>
 {
-
-
     private static final int ACTIVITY_MAIN = R.layout.activity_main;
     private static final int EDITOR_REQUEST_CODE = 100;
-
 
     private NavigationView navigationView;
     private TextView navMonth;
@@ -65,10 +68,12 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab, fab1, fab2;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
     private DrawerMenuTrueHolder drawerMenuTrueHolder = new DrawerMenuTrueHolder();
-    //adapter for listView;
     private android.widget.CursorAdapter cursorAdapter;
     View layout;
     SharedPreferences preferences = null;
+    ListView list;
+    TextView note_empty;
+
 
 
     @Override
@@ -85,13 +90,9 @@ public class MainActivity extends AppCompatActivity
         navMonth = (TextView) header.findViewById(R.id.txtMonth);
         navDay = (TextView) header.findViewById(R.id.txtDay);
         CommonMethods.getDay(header, navMonth, navDay);
-        ListView list = (ListView) findViewById(android.R.id.list);
-
-
-        //insertNote("new \n hi ");
-        //for base update when delete or add
-        // ReloadCursor();
-
+        list = (ListView) findViewById(android.R.id.list);
+        note_empty = (TextView) findViewById(R.id.note_empty);
+        check();
 
         cursorAdapter = new NotesCursorAdapter(this, null, 0);
         list.setAdapter(cursorAdapter);
@@ -105,22 +106,72 @@ public class MainActivity extends AppCompatActivity
                 Uri uri = Uri.parse(NotesProvider.CONTENT_URI + "/" + id);
                 intent.putExtra(NotesProvider.CONTENT_ITEM_TYPE, uri);
                 startActivityForResult(intent, EDITOR_REQUEST_CODE);
-                Log.d("str", "on click position " + String.valueOf(position) + " id " + String.valueOf(id));
+            }
+        });
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, final long long_id)
+            {
+                final String querry = "_id = ?";
+                final String items[] = {
+                        getString(R.string.long_press_open),
+                        getString(R.string.long_press_delete)
+                };
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setItems(items, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item)
+                    {
+                        if (items[item].equals(getString(R.string.long_press_open)))
+                        {
+                            fab.setVisibility(View.GONE);
+                            Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
+                            Uri uri = Uri.parse(NotesProvider.CONTENT_URI + "/" + long_id);
+                            intent.putExtra(NotesProvider.CONTENT_ITEM_TYPE, uri);
+                            startActivityForResult(intent, EDITOR_REQUEST_CODE);
+                            dialog.dismiss();
+
+                        } else if (items[item].equals(getString(R.string.long_press_delete)))
+                        {
+                            getContentResolver().delete(NotesProvider.CONTENT_URI, querry,
+                                    new String[]{String.valueOf(long_id)});
+                            dialog.dismiss();
+                            ReloadCursor();
+                            check();
+                        }
+                    }
+                });
+                builder.show();
+                return true;
             }
         });
         getLoaderManager().initLoader(0, null, this);
 
     }
 
+    private void check()
+    {
+        if (!CommonMethods.checkIfEmpty(DataBase.TABLE_NOTES, this))
+        {
+            list.setVisibility(View.GONE);
+            note_empty.setVisibility(View.VISIBLE);
+        } else
+        {
+            list.setVisibility(View.VISIBLE);
+            note_empty.setVisibility(View.GONE);
+        }
+    }
+
     private void detect_run_time()
     {
-
         preferences = getSharedPreferences("myprefs", 0);
         final SharedPreferences.Editor editor = preferences.edit();
         boolean firstRun = preferences.getBoolean("first", true);
         if (firstRun)
         {
-
             DialogInterface.OnClickListener dialogClickListener =
                     new DialogInterface.OnClickListener()
                     {
@@ -145,7 +196,8 @@ public class MainActivity extends AppCompatActivity
             builder.setMessage((Html.fromHtml(getString(R.string.first_run_alert))))
                     .setPositiveButton(getString(android.R.string.yes), dialogClickListener)
                     .setNegativeButton(getString(android.R.string.no), dialogClickListener)
-                    .setNeutralButton(getString(R.string.no_more_show_first_run), dialogClickListener)
+                    .setNeutralButton(getString(R.string.no_more_show_first_run),
+                            dialogClickListener)
                     .show();
         }
 
@@ -162,10 +214,14 @@ public class MainActivity extends AppCompatActivity
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab1 = (FloatingActionButton) findViewById(R.id.fab1);
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.rotate_backward);
         fab.setOnClickListener(this);
         fab1.setOnClickListener(this);
         fab2.setOnClickListener(this);
@@ -188,10 +244,7 @@ public class MainActivity extends AppCompatActivity
                 Intent intentNot = new Intent(this, NewNoteActivity.class);
                 startActivityForResult(intentNot, EDITOR_REQUEST_CODE);
                 break;
-
         }
-
-
     }
 
     @Override
@@ -208,7 +261,8 @@ public class MainActivity extends AppCompatActivity
     {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -255,33 +309,13 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (id)
         {
-            case R.id.add_sample_notes:
-                insertNote("sample note1");
-                insertNote("sample \nnote2");
-                insertNote("sample note3 which is longer than the others ");
-                ReloadCursor();
-                break;
             case R.id.delete_all_notes:
-                //TODO maybe using delete method can delete specific note giving its id
                 getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
                 ReloadCursor();
                 break;
-
-
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-    private void insertNote(String note)
-    {
-        ContentValues values = new ContentValues();
-        values.put(DataBase.NOTE_TEXT, note);
-        Uri noteURi = getContentResolver().insert(NotesProvider.CONTENT_URI, values);
-        Log.d("stringstring", "inserted note " + noteURi.getLastPathSegment());
-
-    }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -354,7 +388,6 @@ public class MainActivity extends AppCompatActivity
             fab1.setClickable(true);
             fab2.setClickable(true);
             isFabOpen = true;
-
         }
     }
 
@@ -380,6 +413,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume()
     {
+        check();
         ReloadCursor();
         super.onResume();
     }

@@ -3,32 +3,39 @@ package com.example.home.diplom.view.ReminderActivity;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
+import com.example.home.diplom.presenter.provider.Note.NotesProvider;
 import com.example.home.diplom.presenter.provider.Reminder.ReminderCursorAdapter;
 import com.example.home.diplom.presenter.provider.Reminder.ReminderProvider;
 import com.example.home.diplom.view.AboutActivity.AboutActivity;
 import com.example.home.diplom.view.CommonMethods;
 import com.example.home.diplom.view.DrawerMenuTrueHolder;
 import com.example.home.diplom.view.NoteActivity.MainActivity;
+import com.example.home.diplom.view.NoteActivity.NewNoteActivity;
 import com.example.home.diplom.view.ReminderActivity.Category.category_birthdays;
 import com.example.home.diplom.view.ReminderActivity.Category.category_completed;
 import com.example.home.diplom.view.ReminderActivity.Category.category_other;
@@ -48,7 +55,9 @@ public class ReminderActivity extends AppCompatActivity implements
     private TextView navDay;
     private android.widget.CursorAdapter cursorAdapterReminder;
     ListView listViewRem;
+    TextView reminder_empty;
     public static final int REMINDER_REQUEST_CODE = 101;
+    private FloatingActionButton fab_reminder;
 
 
     @Override
@@ -61,13 +70,10 @@ public class ReminderActivity extends AppCompatActivity implements
         View header = navigationView.getHeaderView(0);
         drawerMenuTrueHolder.setNav_remind_true(true);
         CommonMethods.getDay(header, navMonth, navDay);
-
-//        insertNote("new Reminder", "Other", "2017,2,15");
-//        insertNote("new Reminder", "BirthDay", "2000,4,25");
-        //       insertNote("New Reminder", "Personal", "2017,2,15");
-        //  insertNote("content");
-        ReloadCursor();
         listViewRem = (ListView) findViewById(android.R.id.list);
+        fab_reminder = (FloatingActionButton) findViewById(R.id.fab_new_reminder);
+        reminder_empty = (TextView) findViewById(R.id.reminder_empty);
+        check();
         cursorAdapterReminder = new ReminderCursorAdapter(this, null, 0);
         listViewRem.setAdapter(cursorAdapterReminder);
         listViewRem.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -75,11 +81,51 @@ public class ReminderActivity extends AppCompatActivity implements
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                //maybe make fab invisisble
+                fab_reminder.setVisibility(View.GONE);
                 Intent intent = new Intent(ReminderActivity.this, NewReminderActivity.class);
                 Uri uri = Uri.parse(ReminderProvider.CONTENT_URI + "/" + id);
                 intent.putExtra(ReminderProvider.CONTENT_ITEM_TYPE, uri);
                 startActivityForResult(intent, REMINDER_REQUEST_CODE);
+            }
+        });
+        listViewRem.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, final long long_id)
+            {
+                final String querry = "_id = ?";
+
+                final String items[] = {
+                        getString(R.string.long_press_open),
+                        getString(R.string.long_press_delete)
+                };
+                final AlertDialog.Builder builder = new AlertDialog.Builder(ReminderActivity.this);
+                builder.setItems(items, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item)
+                    {
+                        if (items[item].equals(getString(R.string.long_press_open)))
+                        {
+                            Intent intent = new Intent(ReminderActivity.this, NewReminderActivity.class);
+                            Uri uri = Uri.parse(ReminderProvider.CONTENT_URI + "/" + long_id);
+                            intent.putExtra(ReminderProvider.CONTENT_ITEM_TYPE, uri);
+                            startActivityForResult(intent, REMINDER_REQUEST_CODE);
+                            dialog.dismiss();
+
+                        } else if (items[item].equals(getString(R.string.long_press_delete)))
+                        {
+                            getContentResolver().delete(ReminderProvider.CONTENT_URI, querry,
+                                    new String[]{String.valueOf(long_id)});
+                            dialog.dismiss();
+                            ReloadCursor();
+                            check();
+                        }
+                    }
+                });
+                builder.show();
+                return true;
             }
         });
         getLoaderManager().initLoader(0, null, this);
@@ -87,38 +133,29 @@ public class ReminderActivity extends AppCompatActivity implements
 
     }
 
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    private void check()
     {
-        if (requestCode == REMINDER_REQUEST_CODE && resultCode == RESULT_OK)
+        if (!CommonMethods.checkIfEmpty(DataBase.TABLE_REMIND, this))
         {
-            ReloadCursor();
+            listViewRem.setVisibility(View.GONE);
+            reminder_empty.setVisibility(View.VISIBLE);
+        } else
+        {
+            listViewRem.setVisibility(View.VISIBLE);
+            reminder_empty.setVisibility(View.GONE);
         }
-        //maybe make fab visible here
-    }*/
+    }
+
 
     @Override
     protected void onResume()
     {
+        fab_reminder.setVisibility(View.VISIBLE);
         ReloadCursor();
+        check();
         super.onResume();
     }
 
-    private void insertNote(String content, String category, String Time)
-    {
-        ContentValues values = new ContentValues();
-        values.put(DataBase.REMINDER_TEXT, content);
-        values.put(DataBase.REMINDER_CATEGORY, category);
-        values.put(DataBase.REMINDER_ALARM_TIME, Time);
-        getContentResolver().insert(ReminderProvider.CONTENT_URI, values);
-    }
-
-    private void insertNote(String content)
-    {
-        ContentValues values = new ContentValues();
-        values.put(DataBase.REMINDER_TEXT, content);
-        getContentResolver().insert(ReminderProvider.CONTENT_URI, values);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -134,15 +171,7 @@ public class ReminderActivity extends AppCompatActivity implements
         int id = item.getItemId();
         switch (id)
         {
-            case R.id.add_sample_notes:
-                insertNote("TODO thing for doing very long text you know for what", "Other", "2017-02-15");
-                insertNote("congratulate", "Другие", "2000-04-25");
-                insertNote("Smth", "Дни рождения", "2017-02-15");
-                insertNote("что-то", "Персональные", "2017-02-15");
-                ReloadCursor();
-                break;
             case R.id.delete_all_notes:
-                //TODO maybe using delete method can delete specific note giving its id
                 getContentResolver().delete(ReminderProvider.CONTENT_URI, null, null);
                 ReloadCursor();
                 break;
