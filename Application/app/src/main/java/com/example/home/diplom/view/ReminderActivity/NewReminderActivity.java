@@ -3,13 +3,16 @@ package com.example.home.diplom.view.ReminderActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,9 +26,11 @@ import android.widget.Toast;
 
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
+import com.example.home.diplom.presenter.provider.Reminder.AlarmManagerBroadcastReceiver;
 import com.example.home.diplom.presenter.provider.Reminder.ReminderProvider;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class NewReminderActivity extends AppCompatActivity
 {
@@ -46,6 +51,7 @@ public class NewReminderActivity extends AppCompatActivity
     private String oldSpinnerCategory;
     private String oldSpinnerRepeat;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -54,13 +60,6 @@ public class NewReminderActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        spinner_category = (Spinner) findViewById(R.id.spinner_category);
-        spinner_repeat = (Spinner) findViewById(R.id.spinner_repeat);
-        txtNewRem = (EditText) findViewById(R.id.editText2);
-        buttonDate = (TextView) findViewById(R.id.buttonDate);
-        buttonTime = (TextView) findViewById(R.id.buttonTime);
-        buttonResult = (TextView) findViewById(R.id.DateTimeRes);
 
         String[] categories_compare =
                 {
@@ -77,6 +76,12 @@ public class NewReminderActivity extends AppCompatActivity
                         getString(R.string.spinner_repeat_1year)
                 };
 
+        spinner_category = (Spinner) findViewById(R.id.spinner_category);
+        spinner_repeat = (Spinner) findViewById(R.id.spinner_repeat);
+        txtNewRem = (EditText) findViewById(R.id.editText2);
+        buttonDate = (TextView) findViewById(R.id.buttonDate);
+        buttonTime = (TextView) findViewById(R.id.buttonTime);
+        buttonResult = (TextView) findViewById(R.id.DateTimeRes);
         txtNewRem.setOnTouchListener(new View.OnTouchListener()
         {
             @Override
@@ -211,9 +216,28 @@ public class NewReminderActivity extends AppCompatActivity
         values.put(DataBase.REMINDER_ALARM_TIME, newTime);
         values.put(DataBase.REMINDER_CATEGORY, newCategory);
         values.put(DataBase.REMINDER_REPEAT_TIME, newRepeat);
+        setRepeat();
         getContentResolver().insert(ReminderProvider.CONTENT_URI, values);
         setResult(RESULT_OK);
         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    private void setRepeat()
+    {
+        AlarmManagerBroadcastReceiver alarm = new AlarmManagerBroadcastReceiver();
+        String interval = (String) spinner_repeat.getSelectedItem();
+        String t = buttonResult.getText().toString();
+        long ts = dateAndTime.getTimeInMillis();
+        Date tss = dateAndTime.getTime();
+        Log.d("strolol", String.valueOf(ts));
+        Log.d("strolol", String.valueOf(tss));
+
+        Context context = this.getApplicationContext();
+        alarm.setAlarm(context, ts, spinner_repeat.getSelectedItem());
+
+
     }
 
     private void updateReminder(String newText, String newTime, String newCategory, String newRepeat)

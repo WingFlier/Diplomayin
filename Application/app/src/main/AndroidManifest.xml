@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.home.diplom">
 
+    <uses-permission android:name='android.permission.WAKE_LOCK'/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/launcher"
@@ -67,6 +70,8 @@
             android:name=".view.ReminderActivity.Category.category_completed"
             android:label="@string/spinner_completed"
             android:parentActivityName=".view.ReminderActivity.ReminderActivity"/>
+
+        <receiver android:name=".presenter.provider.Reminder.AlarmManagerBroadcastReceiver"></receiver>
     </application>
 
 </manifest>

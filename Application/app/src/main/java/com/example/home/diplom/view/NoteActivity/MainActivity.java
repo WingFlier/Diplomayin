@@ -1,17 +1,14 @@
 package com.example.home.diplom.view.NoteActivity;
 
 import android.app.LoaderManager;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,18 +19,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
@@ -48,9 +41,6 @@ import com.example.home.diplom.view.ReminderActivity.Category.category_other;
 import com.example.home.diplom.view.ReminderActivity.Category.category_personal;
 import com.example.home.diplom.view.ReminderActivity.NewReminderActivity;
 import com.example.home.diplom.view.ReminderActivity.ReminderActivity;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author Tiko :)
@@ -98,6 +88,7 @@ public class MainActivity extends AppCompatActivity
         note_empty = (TextView) findViewById(R.id.note_empty);
         check();
 
+
         cursorAdapter = new NotesCursorAdapter(this, null, 0);
         list.setAdapter(cursorAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -143,7 +134,7 @@ public class MainActivity extends AppCompatActivity
                             getContentResolver().delete(NotesProvider.CONTENT_URI, querry,
                                     new String[]{String.valueOf(long_id)});
                             dialog.dismiss();
-                            ReloadCursor();
+                            reloadCursor();
                             check();
                         }
                     }
@@ -208,7 +199,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private void ReloadCursor()
+    private void reloadCursor()
     {
         getLoaderManager().restartLoader(0, null, this);
     }
@@ -256,7 +247,7 @@ public class MainActivity extends AppCompatActivity
     {
         if (requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK)
         {
-            ReloadCursor();
+            reloadCursor();
         }
         fab.setVisibility(View.VISIBLE);
     }
@@ -279,6 +270,14 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle(R.string.notes);
         setSupportActionBar(toolbar);
         return toolbar;
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        check();
+        reloadCursor();
     }
 
     @Override
@@ -315,7 +314,7 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.delete_all_notes:
                 getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
-                ReloadCursor();
+                reloadCursor();
                 check();
                 break;
         }
@@ -418,8 +417,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume()
     {
-        check();
-        ReloadCursor();
         super.onResume();
+        check();
+        reloadCursor();
     }
 }
