@@ -48,6 +48,7 @@ public class NewNoteActivity extends AppCompatActivity
         editor = (EditText) findViewById(R.id.editText);
         Intent intent = getIntent();
         Uri uri = intent.getParcelableExtra(NotesProvider.CONTENT_ITEM_TYPE);
+        Log.d("logging_tag", "parceable extra uri is " + uri);
         fab_new_note_edit = (FloatingActionButton) findViewById(R.id.fab_new_note);
 
         fab_new_note_edit.setOnClickListener(new View.OnClickListener()
@@ -75,11 +76,13 @@ public class NewNoteActivity extends AppCompatActivity
         {
             setTitle(R.string.old_note_activity);
             action = Intent.ACTION_EDIT;
-            Log.d("str", "uri else worked: noteFilter is:" + noteFilter);
             noteFilter = DataBase.NOTE_ID + "=" + uri.getLastPathSegment();
+            Log.d("logging_tag", "uri else worked: noteFilter is:" + noteFilter);
 
             Cursor cursor = getContentResolver().query(uri, DataBase.ALL_COLUMNS_NOTE, noteFilter,
                     null, null);
+            Log.d("logging_tag", "uri else worked: noteFilter is:" + noteFilter);
+            Log.d("logging_tag", "cursor is :" + cursor);
             cursor.moveToFirst();
             oldText = cursor.getString(cursor.getColumnIndex(DataBase.NOTE_TEXT));
             editor.setText(oldText);
@@ -168,8 +171,6 @@ public class NewNoteActivity extends AppCompatActivity
                 break;
         }
         finish();
-
-
     }
 
     private void deleteNote()
@@ -215,6 +216,4 @@ public class NewNoteActivity extends AppCompatActivity
         finish();
         super.onStop();
     }
-
-
 }

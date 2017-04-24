@@ -32,7 +32,6 @@ public class ReminderProvider extends ContentProvider
     //to indicate that existing note is being updated
     public static final String CONTENT_ITEM_TYPE = "REMINDER";
 
-    /**неведомая хрень*/
     static
     {
         uriMatcher.addURI(AUTHORITY, REM_BASE_PATH, REMINDER);

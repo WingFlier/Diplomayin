@@ -12,7 +12,6 @@ import com.example.home.diplom.presenter.provider.Reminder.ReminderCursorAdapter
 
 public class category_other extends AppCompatActivity
 {
-
     private android.widget.CursorAdapter cursorAdapterReminder;
 
     @Override
@@ -32,6 +31,4 @@ public class category_other extends AppCompatActivity
         listView.setAdapter(cursorAdapterReminder);
         cursorAdapterReminder.changeCursor(cursor);
     }
-
-
 }

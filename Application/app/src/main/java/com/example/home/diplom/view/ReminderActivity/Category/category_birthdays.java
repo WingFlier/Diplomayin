@@ -14,7 +14,6 @@ import com.example.home.diplom.presenter.provider.Reminder.ReminderCursorAdapter
 
 public class category_birthdays extends AppCompatActivity
 {
-
     private android.widget.CursorAdapter cursorAdapterReminder;
 
     @Override
@@ -32,6 +31,4 @@ public class category_birthdays extends AppCompatActivity
         listView.setAdapter(cursorAdapterReminder);
         cursorAdapterReminder.changeCursor(cursor);
     }
-
-
 }

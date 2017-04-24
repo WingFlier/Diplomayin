@@ -32,7 +32,6 @@ public class NotesProvider extends ContentProvider
     //to indicate that existing note is being updated
     public static final String CONTENT_ITEM_TYPE = "Note";
 
-    /**неведомая хрень*/
     static
     {
         uriMatcher.addURI(AUTHORITY, BASE_PATH, NOTES);
@@ -55,7 +54,6 @@ public class NotesProvider extends ContentProvider
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
     {
-        Log.d("str", "QUery function called");
         if (uriMatcher.match(uri) == NOTES_ID)
         {
             Log.d("str", "selection is: " + selection);
@@ -66,8 +64,6 @@ public class NotesProvider extends ContentProvider
         return database.query(DataBase.TABLE_NOTES, DataBase.ALL_COLUMNS_NOTE
                 , selection, null, null, null, DataBase.NOTE_ID
                         + " DESC");
-        /*return database.query(DataBase.TABLE_NOTES, DataBase.ALL_COLUMNS
-                , selection, null, null, null,  DataBase.NOTE_ID  + " DESC");*/
     }
 
     @Nullable

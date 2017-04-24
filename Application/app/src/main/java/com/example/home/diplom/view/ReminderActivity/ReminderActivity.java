@@ -1,7 +1,6 @@
 package com.example.home.diplom.view.ReminderActivity;
 
 import android.app.LoaderManager;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,20 +23,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
-import com.example.home.diplom.presenter.provider.Note.NotesProvider;
 import com.example.home.diplom.presenter.provider.Reminder.ReminderCursorAdapter;
 import com.example.home.diplom.presenter.provider.Reminder.ReminderProvider;
 import com.example.home.diplom.view.AboutActivity.AboutActivity;
 import com.example.home.diplom.view.CommonMethods;
 import com.example.home.diplom.view.DrawerMenuTrueHolder;
-import com.example.home.diplom.view.NoteActivity.MainActivity;
-import com.example.home.diplom.view.NoteActivity.NewNoteActivity;
 import com.example.home.diplom.view.ReminderActivity.Category.category_birthdays;
-import com.example.home.diplom.view.ReminderActivity.Category.category_completed;
 import com.example.home.diplom.view.ReminderActivity.Category.category_other;
 import com.example.home.diplom.view.ReminderActivity.Category.category_personal;
 
@@ -58,6 +52,8 @@ public class ReminderActivity extends AppCompatActivity implements
     TextView reminder_empty;
     public static final int REMINDER_REQUEST_CODE = 101;
     private FloatingActionButton fab_reminder;
+
+    public static int note_id;
 
 
     @Override
@@ -85,6 +81,9 @@ public class ReminderActivity extends AppCompatActivity implements
                 Intent intent = new Intent(ReminderActivity.this, NewReminderActivity.class);
                 Uri uri = Uri.parse(ReminderProvider.CONTENT_URI + "/" + id);
                 intent.putExtra(ReminderProvider.CONTENT_ITEM_TYPE, uri);
+                note_id = (int) id;
+                Log.d("logging_tag", "id for send is + " + note_id);
+                Log.d("logging_tag", "uri for send is + " + uri);
                 startActivityForResult(intent, REMINDER_REQUEST_CODE);
             }
         });
@@ -219,13 +218,7 @@ public class ReminderActivity extends AppCompatActivity implements
                 intent = new Intent(ReminderActivity.this, category_other.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_completed:
-                intent = new Intent(ReminderActivity.this, category_completed.class);
-                startActivity(intent);
-                break;
         }
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_remind);
         drawer.closeDrawer(GravityCompat.START);
         return true;

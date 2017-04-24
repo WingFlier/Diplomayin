@@ -3,12 +3,10 @@ package com.example.home.diplom.view.ReminderActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
@@ -26,15 +24,16 @@ import android.widget.Toast;
 
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
-import com.example.home.diplom.presenter.provider.Reminder.AlarmManagerBroadcastReceiver;
+import com.example.home.diplom.presenter.provider.Reminder.Alarm.AlarmService;
 import com.example.home.diplom.presenter.provider.Reminder.ReminderProvider;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class NewReminderActivity extends AppCompatActivity
 {
-
+    DataBase dataBase;
+    // time in milis holder
+    long milissDate;
 
     TextView buttonResult;
     TextView buttonDate;
@@ -50,6 +49,7 @@ public class NewReminderActivity extends AppCompatActivity
     private String oldDateTime;
     private String oldSpinnerCategory;
     private String oldSpinnerRepeat;
+    String[] repeat;
 
 
     @Override
@@ -60,6 +60,7 @@ public class NewReminderActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        dataBase = new DataBase(this);
 
         String[] categories_compare =
                 {
@@ -70,11 +71,13 @@ public class NewReminderActivity extends AppCompatActivity
         String[] reminder_repeat =
                 {
                         getString(R.string.spinner_repeat_once),
-                        getString(R.string.spinner_repeat_15min),
+                        getString(R.string.spinner_repeat_1hour),
                         getString(R.string.spinner_repeat_1day),
                         getString(R.string.spinner_repeat_1week),
+                        getString(R.string.spinner_repeat_1month),
                         getString(R.string.spinner_repeat_1year)
                 };
+        repeat = reminder_repeat;
 
         spinner_category = (Spinner) findViewById(R.id.spinner_category);
         spinner_repeat = (Spinner) findViewById(R.id.spinner_repeat);
@@ -94,11 +97,14 @@ public class NewReminderActivity extends AppCompatActivity
         });
         Intent intent = getIntent();
         Uri uri = intent.getParcelableExtra(ReminderProvider.CONTENT_ITEM_TYPE);
+
+
+        Log.d("logging_tag", "id is  +**" + ReminderActivity.note_id);
+        Log.d("logging_tag", "uri is  +**" + uri);
         if (uri == null)
         {
             action = Intent.ACTION_INSERT;
             setTitle(R.string.new_reminder_title);
-
         } else
         {
             setTitle(R.string.old_reminder_title);
@@ -112,6 +118,8 @@ public class NewReminderActivity extends AppCompatActivity
             oldDateTime = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_ALARM_TIME));
             oldSpinnerCategory = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_CATEGORY));
             oldSpinnerRepeat = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_REPEAT_TIME));
+
+            cursor.getInt(cursor.getColumnIndex(DataBase.REMINDER_REPEAT_TIME));
             buttonResult.setText(oldDateTime);
             txtNewRem.setText(oldText);
             txtNewRem.requestFocus();
@@ -165,6 +173,7 @@ public class NewReminderActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     private void finishEditing()
     {
         newText = txtNewRem.getText().toString().trim();
@@ -187,7 +196,18 @@ public class NewReminderActivity extends AppCompatActivity
                     setResult(RESULT_CANCELED);
                 } else
                 {
-                    insertReminder(newText, newTime, newCategory, newRepeat);
+                    /*insertReminder(newText, newTime, newCategory, newRepeat);*/
+                    for (int i = 0; i < repeat.length; i++)
+                    {
+                        if (newRepeat.equals(repeat[i]))
+                        {
+                            newRepeat = String.valueOf(i);
+                        }
+                    }
+                    int id_of_new_note = (int) dataBase.insertAlert(newText,
+                            newTime, milissDate, newCategory, newRepeat);
+                    createAlarm(id_of_new_note);
+                    Log.d("logging_tag", "this shit" + id_of_new_note);
                     break;
                 }
                 break;
@@ -201,50 +221,32 @@ public class NewReminderActivity extends AppCompatActivity
                 else if (id == 3)
                     setResult(RESULT_CANCELED);
                 else
+                    // alarm edit
                     updateReminder(newText, newTime, newCategory, newRepeat);
                 break;
         }
         finish();
-
     }
 
-
-    private void insertReminder(String newText, String newTime, String newCategory, String newRepeat)
+ /*   private void insertReminder(String newText, String newTime, String newCategory, String newRepeat)
     {
         ContentValues values = new ContentValues();
         values.put(DataBase.REMINDER_TEXT, newText);
         values.put(DataBase.REMINDER_ALARM_TIME, newTime);
         values.put(DataBase.REMINDER_CATEGORY, newCategory);
         values.put(DataBase.REMINDER_REPEAT_TIME, newRepeat);
-        setRepeat();
+        //setRepeat();
         getContentResolver().insert(ReminderProvider.CONTENT_URI, values);
         setResult(RESULT_OK);
         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-
-
-    }
-
-    private void setRepeat()
-    {
-        AlarmManagerBroadcastReceiver alarm = new AlarmManagerBroadcastReceiver();
-        String interval = (String) spinner_repeat.getSelectedItem();
-        String t = buttonResult.getText().toString();
-        long ts = dateAndTime.getTimeInMillis();
-        Date tss = dateAndTime.getTime();
-        Log.d("strolol", String.valueOf(ts));
-        Log.d("strolol", String.valueOf(tss));
-
-        Context context = this.getApplicationContext();
-        alarm.setAlarm(context, ts, spinner_repeat.getSelectedItem());
-
-
-    }
+    }*/
 
     private void updateReminder(String newText, String newTime, String newCategory, String newRepeat)
     {
         ContentValues values = new ContentValues();
         values.put(DataBase.REMINDER_TEXT, newText);
         values.put(DataBase.REMINDER_ALARM_TIME, newTime);
+        values.put(DataBase.REMINDER_ALARM_TIME_MILIS, milissDate);
         values.put(DataBase.REMINDER_CATEGORY, newCategory);
         values.put(DataBase.REMINDER_REPEAT_TIME, newRepeat);
         getContentResolver().update(ReminderProvider.CONTENT_URI, values, reminderFilter, null);
@@ -258,6 +260,15 @@ public class NewReminderActivity extends AppCompatActivity
         Toast.makeText(this, "Reminder Deleted", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
         finish();
+    }
+
+    private void createAlarm(int id)
+    {
+        Intent alarm = new Intent(this, AlarmService.class);
+        alarm.putExtra("id", id);
+        alarm.setAction(AlarmService.CREATE);
+        startService(alarm);
+        dataBase.close();
     }
 
     public void onClickTime(View v)
@@ -296,16 +307,17 @@ public class NewReminderActivity extends AppCompatActivity
             dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
             dateAndTime.set(Calendar.MINUTE, minute);
             setInitialDateTime();
+            milissDate = dateAndTime.getTimeInMillis();
         }
     };
 
     private void setInitialDateTime()
     {
-
         buttonResult.setText(DateUtils.formatDateTime(this,
                 dateAndTime.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
                         | DateUtils.FORMAT_SHOW_TIME));
+
     }
 
     @Override

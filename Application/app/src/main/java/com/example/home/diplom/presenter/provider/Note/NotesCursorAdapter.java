@@ -22,9 +22,7 @@ public class NotesCursorAdapter extends CursorAdapter
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent)
     {
-        return LayoutInflater.from(context).inflate(
-                R.layout.note_list_item, parent, false
-        );
+        return LayoutInflater.from(context).inflate(R.layout.note_list_item, parent, false);
     }
 
     @Override
@@ -32,16 +30,14 @@ public class NotesCursorAdapter extends CursorAdapter
     {
         String noteText = cursor.getString(cursor.getColumnIndex(DataBase.NOTE_TEXT));
         String noteTime = cursor.getString(cursor.getColumnIndex(DataBase.NOTE_TIME));
-
-        int pos = noteText.indexOf(10);
+        /*  int pos = noteText.indexOf(10);
         if (pos != -1)
         {
             noteText = noteText.substring(0, pos) + "...";
-        }
-
-        TextView tv = (TextView) view.findViewById(R.id.tvNote);
+        }*/
+        TextView text = (TextView) view.findViewById(R.id.tvNote);
         TextView tvTime = (TextView) view.findViewById(R.id.tvTime);
-        tv.setText(noteText);
+        text.setText(noteText);
         tvTime.setText(noteTime);
     }
 
@@ -50,6 +46,4 @@ public class NotesCursorAdapter extends CursorAdapter
     {
         return super.getCount();
     }
-
-
 }
