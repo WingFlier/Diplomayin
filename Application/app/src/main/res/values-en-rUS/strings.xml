@@ -39,9 +39,10 @@
     <string name="spinner_completed">Completed</string>
     <string name="reminder_add_date_button">Add Date</string>
     <string name="reminder_add_time_button">Add Time</string>
-    <string name="spinner_repeat_15min">Every 15 minutes</string>
+    <string name="spinner_repeat_1hour">Every Hour</string>
     <string name="spinner_repeat_1day">Every day</string>
     <string name="spinner_repeat_1week">Every week</string>
+    <string name="spinner_repeat_1month">Every month</string>
     <string name="spinner_repeat_1year">Every year</string>
     <string name="spinner_repeat_once">Once</string>
     <string name="new_reminder_date">Change Date</string>

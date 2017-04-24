@@ -59,6 +59,8 @@ public class ReminderActivity extends AppCompatActivity implements
     public static final int REMINDER_REQUEST_CODE = 101;
     private FloatingActionButton fab_reminder;
 
+    public static int note_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -85,6 +87,9 @@ public class ReminderActivity extends AppCompatActivity implements
                 Intent intent = new Intent(ReminderActivity.this, NewReminderActivity.class);
                 Uri uri = Uri.parse(ReminderProvider.CONTENT_URI + "/" + id);
                 intent.putExtra(ReminderProvider.CONTENT_ITEM_TYPE, uri);
+                note_id = (int) id;
+                Log.d("logging_tag", "id for send is + " + note_id);
+                Log.d("logging_tag", "uri for send is + " + uri);
                 startActivityForResult(intent, REMINDER_REQUEST_CODE);
             }
         });

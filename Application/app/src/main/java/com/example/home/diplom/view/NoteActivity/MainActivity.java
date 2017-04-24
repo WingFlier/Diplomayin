@@ -27,6 +27,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
@@ -41,6 +42,15 @@ import com.example.home.diplom.view.ReminderActivity.Category.category_other;
 import com.example.home.diplom.view.ReminderActivity.Category.category_personal;
 import com.example.home.diplom.view.ReminderActivity.NewReminderActivity;
 import com.example.home.diplom.view.ReminderActivity.ReminderActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tiko :)
@@ -51,6 +61,10 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>
 {
+    /**
+     * Server upload
+     */
+
     private static final int ACTIVITY_MAIN = R.layout.activity_main;
     private static final int EDITOR_REQUEST_CODE = 100;
 
@@ -66,8 +80,6 @@ public class MainActivity extends AppCompatActivity
     SharedPreferences preferences = null;
     ListView list;
     TextView note_empty;
-
-
 
 
     @Override
@@ -99,6 +111,7 @@ public class MainActivity extends AppCompatActivity
                 fab.setVisibility(View.GONE);
                 Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
                 Uri uri = Uri.parse(NotesProvider.CONTENT_URI + "/" + id);
+                Log.d("logging_tag", "uri is " + uri);
                 intent.putExtra(NotesProvider.CONTENT_ITEM_TYPE, uri);
                 startActivityForResult(intent, EDITOR_REQUEST_CODE);
             }
@@ -144,7 +157,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
         getLoaderManager().initLoader(0, null, this);
-
     }
 
     private void check()
@@ -316,6 +328,26 @@ public class MainActivity extends AppCompatActivity
                 getContentResolver().delete(NotesProvider.CONTENT_URI, null, null);
                 reloadCursor();
                 check();
+                break;
+            case R.id.action_upload:
+
+                HashMap<String, String> data = new HashMap<>();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference usersRef = ref.child("notes");
+                usersRef.removeValue();
+                DataBase base = new DataBase(this);
+                Cursor cursor = base.getAllItems();
+                while (cursor.moveToNext())
+                {
+                    data.put("id", cursor.getString(cursor.getColumnIndex(DataBase.NOTE_ID)));
+                    data.put("note_table", cursor.getString(cursor.getColumnIndex(DataBase.NOTE_TEXT)));
+                    data.put("note_created_time_table", cursor.getString(cursor.getColumnIndex(DataBase.NOTE_TIME)));
+                    //upload to server
+                    usersRef.child(data.get("id")).setValue(data);
+                }
+
+                cursor.close();
+                Toast.makeText(this, "Uploaded", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

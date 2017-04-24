@@ -8,9 +8,10 @@
 
     <string-array name="spinnerItemsRepeat">
         <item>@string/spinner_repeat_once</item>
-        <item>@string/spinner_repeat_15min</item>
+        <item>@string/spinner_repeat_1hour</item>
         <item>@string/spinner_repeat_1day</item>
         <item>@string/spinner_repeat_1week</item>
+        <item>@string/spinner_repeat_1month</item>
         <item>@string/spinner_repeat_1year</item>
     </string-array>
 </resources>

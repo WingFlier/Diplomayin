@@ -1,6 +1,7 @@
 package com.example.home.diplom.model;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
@@ -12,7 +13,7 @@ public class DataBase extends SQLiteOpenHelper
 
 
     private static final String DATABASE_NAME = "notes.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
 
     /*************NOTES***************/
@@ -52,6 +53,7 @@ public class DataBase extends SQLiteOpenHelper
     public static final String REMINDER_CATEGORY = "reminderCategory";
     public static final String REMINDER_ALARM_TIME = "reminderAlarmTime";
     public static final String REMINDER_REPEAT_TIME = "reminderRepeatTime";
+    public static final String REMINDER_ALARM_TIME_MILIS = "alarmTimeInMilis";
     public static final String REMINDER_CREATED = "reminderCreated";
 
     /**********
@@ -64,6 +66,7 @@ public class DataBase extends SQLiteOpenHelper
                     + REMINDER_CATEGORY + " TEXT, "
                     + REMINDER_ALARM_TIME + " TEXT, "
                     + REMINDER_REPEAT_TIME + " TEXT, "
+                    + REMINDER_ALARM_TIME_MILIS + " LONG, "
                     + REMINDER_CREATED + " TEXT default CURRENT_TIMESTAMP)";
 
 
@@ -72,7 +75,7 @@ public class DataBase extends SQLiteOpenHelper
      */
     public static final String[] ALL_COLUMNS_REMINDER = {
             REMINDER_ID, REMINDER_TEXT, REMINDER_CATEGORY,
-            REMINDER_ALARM_TIME, REMINDER_REPEAT_TIME, REMINDER_CREATED
+            REMINDER_ALARM_TIME, REMINDER_REPEAT_TIME, REMINDER_ALARM_TIME_MILIS, REMINDER_CREATED
     };
     /********
      * NOTES
@@ -103,4 +106,47 @@ public class DataBase extends SQLiteOpenHelper
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REMIND);
         onCreate(db);
     }
+
+    public Cursor getAllItems()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_NOTES + " ORDER BY " + NOTE_ID + " DESC", null);
+    }
+
+    public Cursor getItem(int id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_REMIND + " WHERE " +
+                REMINDER_ID + " = ? ", new String[]{Integer.toString(id)});
+    }
+
+    public boolean updateTime(Integer id, long time)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(REMINDER_ALARM_TIME, time);
+        db.update(TABLE_REMIND, values, REMINDER_ID + " = ? ",
+                new String[]{Integer.toString(id)});
+        return true;
+    }
+
+    public Integer deleteItem(Integer id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_REMIND, REMINDER_ID + " = ? ",
+                new String[]{Integer.toString(id)});
+    }
+
+    public long insertAlert(String newText, String newTime, long milisTime, String newCategory, String newRepeat)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DataBase.REMINDER_TEXT, newText);
+        values.put(DataBase.REMINDER_ALARM_TIME, newTime);
+        values.put(DataBase.REMINDER_ALARM_TIME_MILIS, milisTime);
+        values.put(DataBase.REMINDER_CATEGORY, newCategory);
+        values.put(DataBase.REMINDER_REPEAT_TIME, newRepeat);
+        return db.insert(TABLE_REMIND, null, values);
+    }
+
 }

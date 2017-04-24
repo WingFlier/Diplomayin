@@ -6,6 +6,12 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_upload"
+        android:orderInCategory="100"
+        android:icon="@mipmap/ic_upload"
+        android:title="@string/action_settings"
+        app:showAsAction="always"/>
     <item android:title="@string/settings_for_developer">
         <menu>
             <item

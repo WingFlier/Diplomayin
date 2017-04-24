@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.home.diplom">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name='android.permission.WAKE_LOCK'/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -23,6 +25,7 @@
         <activity
             android:name=".view.ReminderActivity.ReminderActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+
         <provider
             android:name=".presenter.provider.Note.NotesProvider"
             android:authorities="com.wingfly.home.diplom.notesprovider"
@@ -71,7 +74,19 @@
             android:label="@string/spinner_completed"
             android:parentActivityName=".view.ReminderActivity.ReminderActivity"/>
 
-        <receiver android:name=".presenter.provider.Reminder.AlarmManagerBroadcastReceiver"></receiver>
+        <receiver android:name=".presenter.provider.Reminder.Alarm.AlarmSetter">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".presenter.provider.Reminder.Alarm.AlarmReceiver"
+            android:enabled="true"></receiver>
+
+        <service
+            android:name=".presenter.provider.Reminder.Alarm.AlarmService"
+            android:enabled="true"></service>
+
     </application>
 
 </manifest>
