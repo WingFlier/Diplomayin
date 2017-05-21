@@ -34,7 +34,4 @@ dependencies {
     compile 'com.afollestad.material-dialogs:commons:0.9.4.4'
     testCompile 'junit:junit:4.12'
 }
-
-
-
 apply plugin: 'com.google.gms.google-services'
