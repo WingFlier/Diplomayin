@@ -5,10 +5,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+<<<<<<< HEAD
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+=======
+import android.database.Cursor;
+>>>>>>> origin/master
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -19,7 +23,10 @@ import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
 import com.example.home.diplom.presenter.provider.Reminder.ReminderProvider;
 import com.example.home.diplom.view.ReminderActivity.NewReminderActivity;
+<<<<<<< HEAD
 import com.example.home.diplom.view.ReminderActivity.ReminderActivity;
+=======
+>>>>>>> origin/master
 
 import java.util.Calendar;
 
@@ -32,6 +39,11 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent)
     {
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/master
         int id = intent.getIntExtra("id", 0);
         String title = intent.getStringExtra("title");
 
@@ -43,6 +55,10 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
         //String repeat = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_REPEAT_TIME));
         Calendar time = Calendar.getInstance();
         time.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(DataBase.REMINDER_ALARM_TIME)));
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
         if (frequency > 0)
         {
             if (frequency == HOURLY)
@@ -61,11 +77,19 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
             {
                 time.add(Calendar.YEAR, 1);
             }
+<<<<<<< HEAD
             /*database.updateTime(id, time.getTimeInMillis());
             Intent setAlarm = new Intent(context, AlarmService.class);
             setAlarm.putExtra("id", id);
             setAlarm.setAction(AlarmService.CREATE);
             context.startService(setAlarm);*/
+=======
+            database.updateTime(id, time.getTimeInMillis());
+            Intent setAlarm = new Intent(context, AlarmService.class);
+            setAlarm.putExtra("id", id);
+            setAlarm.setAction(AlarmService.CREATE);
+            context.startService(setAlarm);
+>>>>>>> origin/master
         }
 
         Intent result = new Intent(context, NewReminderActivity.class);
@@ -74,16 +98,24 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(NewReminderActivity.class);
         stackBuilder.addNextIntent(result);
+<<<<<<< HEAD
         PendingIntent clicked = PendingIntent.getActivity(context, 0, new Intent(context, ReminderActivity.class), 0);
 
+=======
+        PendingIntent clicked = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+>>>>>>> origin/master
 
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
         bigStyle.setBigContentTitle("New Alarm");
         bigStyle.bigText(title);
         Notification n = new NotificationCompat.Builder(context)
+<<<<<<< HEAD
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
                         R.mipmap.alarm))
                 .setSmallIcon(R.mipmap.alarm)
+=======
+                .setSmallIcon(R.drawable.launcher)
+>>>>>>> origin/master
                 .setContentText(title)
                 .setPriority(Notification.PRIORITY_MAX)
                 .setWhen(0)
@@ -91,11 +123,15 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
                 .setContentIntent(clicked)
                 .setAutoCancel(true)
                 .build();
+<<<<<<< HEAD
         SharedPreferences sharedpreferences = context.getSharedPreferences("settingPrefs", Context.MODE_PRIVATE);
         if (sharedpreferences.getInt("vibrate", -1) == 0)
         {
             n.defaults |= Notification.DEFAULT_VIBRATE;
         }
+=======
+        n.defaults |= Notification.DEFAULT_VIBRATE;
+>>>>>>> origin/master
         n.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         n.defaults |= Notification.DEFAULT_SOUND;
 
@@ -103,4 +139,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, n);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master
