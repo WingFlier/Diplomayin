@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\96791c26cfe71b81e3502b24bdbea80639c8da48\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0780745878c87cc0989c84d661f698265e14941d\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\5f1a19d3a2771e23976edf512ba8258f7fac53e7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_25d5293492d094ac18b34d74ddf0b690ffe12b1e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\a783bbe2e010d2cb512d7801a731afa4d4d08251\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9715585867480e9916e0ce284ac52697678afe4c">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_75c38598fd6f9812786eb613d8d5c4b4a448a2bb.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\7f9d86e003d15e2e432c8853b43678963fef9ea7\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b276afe94d50600f8ebef4949bd821e8686dae15\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\0c8dcd212a10f2bb35db9a4917217e16dad6eb32\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_020e9b6ca225b6aa43ddd8f68fa35642f4826fa2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.3.1_3fc6d28d536d2a58b6dbbab78d241400caae6a37\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\b78bdb58aae5fb07906e71707980663bc5989905\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_da65a610eea90bc9700547bf093940a3d21ca146\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\7c1eb0eb37770e0b21428dc3c1c16cfaa202647a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8531f2d46b35de75e6130f25830e0c2c0d6bb98c">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_8259d11fa2beeb54dce1744bcdc8bcf83b48f3a7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\53afb89225a7c940b41755e1eaa90cd1657354b5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_11ff495f559eef021ff3c5b6f525e892fb1d2003.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\09fc7e4b30533143e1d857f7bf7989d4050ba4a5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="adb0c8575a8fcdd3628db9380b33b5df11fcd70c">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_f249d78c69fa23d31666116f3faae45839acb68b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\8b5c15d46ceeaa65e19690f6d78550db91318187\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_7a2ea5e80ae8f9793516a2d298dd2fca2d5c8a0e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\d704c768d54e6bec60bd22f8c47ca535ccf0c305\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_8119bcd60b546e25634f5c2e9be053a8db411395.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\77ae588fff330ed836083c128ccec1a473a3185b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_e12a1ec51d0f25cdf6ab3172ac70f9d433e1e0ab.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\b8dc21c17032ccf61c86e345d222ea25ca9c79bc\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_afe5cdedf211e344c8bf54b6bfc08b6fda271a24\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\e702954d23b6e397d99544c0df70cdf92af9727c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_11ea608a004bc672510fd1eb51c92b7a24547268.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.3.1_7095f4a25b7f5f2ec949f93a30f6a4a5e3e4aa45\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\081682a0853d3ea1c7cd51c3a0d2d397fe9b9616\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6f629dbbab0c754d63fb93efe924b94701b2967f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\0b2f065d86c39dadccbc0159e26d03fab0cc558d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_634c230ea1d5f578e1d33823d43270043f5ae8ae\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_e66bcb99263fdd3ed4945c21a0bfd50581977b32\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="fdc20dcdb502e19aaafdc5c9875f7051732aa58f">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_83971410f3683c51ab95a1b097e3b7e8337b6ab6\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\c1c33a579be630f071a71130ef2681ca7f476d2c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_243f5f88b97102f7cd55f64d94c44b974e637393.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\ddcb0fd3704741635b292d5af618962d6e2792c2\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0804d38263d24d3c3231f8454ff753037305782e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\661f790ee5b8baee39c849443c56dc05ee5598cf\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d0728b1ac4e2e8f3497e4cab83fac4fa780b56cb\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\995fbeb6784dfe9612d656e44169da24217d64b2\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5a5cbc42192d2afde319e4babe59bf8e41a49d35">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_0c48b3baf59e3af4c65104819f55a50d78384030.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\9b5cd3870cc70c9fc1c8ca12d05af7f28c293df6\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_e3885054c3bf7cb139747f9acf45d84a47fed258.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\08b90da365d476deeb4e8359fe7b188a1b0bd82b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_f3d7914cb87895ea00b63a7f8751466771175047.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\7f75b6530b971d8ad9793daa8ac8c5da2d28f1ac\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7634ff155243b56a50c2f3510cffeaa89ba16dd4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\900d78a2c147754d520e1877202c42b136e58137\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7cea702b24e456c8d99eadb2f032b0bb607b4be9\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\900d78a2c147754d520e1877202c42b136e58137\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_7cea702b24e456c8d99eadb2f032b0bb607b4be9.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\a783bbe2e010d2cb512d7801a731afa4d4d08251\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9715585867480e9916e0ce284ac52697678afe4c">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_75c38598fd6f9812786eb613d8d5c4b4a448a2bb\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\7f9d86e003d15e2e432c8853b43678963fef9ea7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_b276afe94d50600f8ebef4949bd821e8686dae15.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\5f1a19d3a2771e23976edf512ba8258f7fac53e7\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_25d5293492d094ac18b34d74ddf0b690ffe12b1e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\995fbeb6784dfe9612d656e44169da24217d64b2\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5a5cbc42192d2afde319e4babe59bf8e41a49d35">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0c48b3baf59e3af4c65104819f55a50d78384030\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\0c8dcd212a10f2bb35db9a4917217e16dad6eb32\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_020e9b6ca225b6aa43ddd8f68fa35642f4826fa2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_3fc6d28d536d2a58b6dbbab78d241400caae6a37.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\b78bdb58aae5fb07906e71707980663bc5989905\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_da65a610eea90bc9700547bf093940a3d21ca146.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\09fc7e4b30533143e1d857f7bf7989d4050ba4a5\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="adb0c8575a8fcdd3628db9380b33b5df11fcd70c">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f249d78c69fa23d31666116f3faae45839acb68b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\7c1eb0eb37770e0b21428dc3c1c16cfaa202647a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8531f2d46b35de75e6130f25830e0c2c0d6bb98c">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8259d11fa2beeb54dce1744bcdc8bcf83b48f3a7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\53afb89225a7c940b41755e1eaa90cd1657354b5\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_11ff495f559eef021ff3c5b6f525e892fb1d2003\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\d704c768d54e6bec60bd22f8c47ca535ccf0c305\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8119bcd60b546e25634f5c2e9be053a8db411395\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\8b5c15d46ceeaa65e19690f6d78550db91318187\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7a2ea5e80ae8f9793516a2d298dd2fca2d5c8a0e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\e702954d23b6e397d99544c0df70cdf92af9727c\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_11ea608a004bc672510fd1eb51c92b7a24547268\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\b8dc21c17032ccf61c86e345d222ea25ca9c79bc\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_afe5cdedf211e344c8bf54b6bfc08b6fda271a24.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\gson-2.3.1_7095f4a25b7f5f2ec949f93a30f6a4a5e3e4aa45.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\c1c33a579be630f071a71130ef2681ca7f476d2c\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_243f5f88b97102f7cd55f64d94c44b974e637393\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\081682a0853d3ea1c7cd51c3a0d2d397fe9b9616\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_6f629dbbab0c754d63fb93efe924b94701b2967f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\0b2f065d86c39dadccbc0159e26d03fab0cc558d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_634c230ea1d5f578e1d33823d43270043f5ae8ae.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\77ae588fff330ed836083c128ccec1a473a3185b\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e12a1ec51d0f25cdf6ab3172ac70f9d433e1e0ab\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\661f790ee5b8baee39c849443c56dc05ee5598cf\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_d0728b1ac4e2e8f3497e4cab83fac4fa780b56cb.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\9b5cd3870cc70c9fc1c8ca12d05af7f28c293df6\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e3885054c3bf7cb139747f9acf45d84a47fed258\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Wingfly\.android\build-cache\08b90da365d476deeb4e8359fe7b188a1b0bd82b\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f3d7914cb87895ea00b63a7f8751466771175047\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\96791c26cfe71b81e3502b24bdbea80639c8da48\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_0780745878c87cc0989c84d661f698265e14941d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\7f75b6530b971d8ad9793daa8ac8c5da2d28f1ac\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_7634ff155243b56a50c2f3510cffeaa89ba16dd4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Wingfly\.android\build-cache\ddcb0fd3704741635b292d5af618962d6e2792c2\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\Wingfly\Desktop\DiplomNorQashac\Diplomayin\Application\app\build\intermediates\pre-dexed\debug\classes_0804d38263d24d3c3231f8454ff753037305782e.jar" />
+    </item>
+
+</items>
