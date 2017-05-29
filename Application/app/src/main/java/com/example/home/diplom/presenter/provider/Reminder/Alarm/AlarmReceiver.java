@@ -64,11 +64,11 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
             {
                 time.add(Calendar.YEAR, 1);
             }
-            database.updateTime(id, time.getTimeInMillis());
+           /* database.updateTime(id, time.getTimeInMillis());
             Intent setAlarm = new Intent(context, AlarmService.class);
             setAlarm.putExtra("id", id);
             setAlarm.setAction(AlarmService.CREATE);
-            context.startService(setAlarm);
+            context.startService(setAlarm);*/
         }
 
         Intent result = new Intent(context, NewReminderActivity.class);

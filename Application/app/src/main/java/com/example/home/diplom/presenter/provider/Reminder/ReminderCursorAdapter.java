@@ -28,17 +28,29 @@ public class ReminderCursorAdapter extends CursorAdapter
         return LayoutInflater.from(context).inflate(R.layout.reminder_list_item, parent, false);
     }
 
-
     @Override
     public void bindView(View view, Context context, Cursor cursor)
     {
+        String[] reminder_repeat =
+                {
+                        context.getString(R.string.spinner_repeat_once),
+                        context.getString(R.string.spinner_repeat_1hour),
+                        context.getString(R.string.spinner_repeat_1day),
+                        context.getString(R.string.spinner_repeat_1week),
+                        context.getString(R.string.spinner_repeat_1month),
+                        context.getString(R.string.spinner_repeat_1year)
+                };
+
         TextView txtCategory = (TextView) view.findViewById(R.id.txtCategory);
         TextView txtReminderContent = (TextView) view.findViewById(R.id.txtReminderContent);
         TextView txtReminderRepeat = (TextView) view.findViewById(R.id.textRepeat);
         TextView txtAlarmTime = (TextView) view.findViewById(R.id.txtAlarmTime);
 
         String reminderCategory = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_CATEGORY));
-        String reminderRepeat = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_REPEAT_TIME));
+        String reminderRepeat = reminder_repeat
+                [
+                Integer.parseInt(cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_REPEAT_TIME)))
+                ];
         String reminderContent = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_TEXT));
         String reminderAlarmTime = cursor.getString(cursor.getColumnIndex(DataBase.REMINDER_ALARM_TIME));
 

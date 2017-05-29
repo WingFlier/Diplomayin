@@ -1,10 +1,12 @@
 package com.example.home.diplom.view.ReminderActivity;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,7 +25,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.example.home.diplom.R;
 import com.example.home.diplom.model.DataBase;
 import com.example.home.diplom.presenter.provider.Reminder.ReminderCursorAdapter;
@@ -31,6 +36,7 @@ import com.example.home.diplom.presenter.provider.Reminder.ReminderProvider;
 import com.example.home.diplom.view.AboutActivity.AboutActivity;
 import com.example.home.diplom.view.CommonMethods;
 import com.example.home.diplom.view.DrawerMenuTrueHolder;
+import com.example.home.diplom.view.NoteActivity.MainActivity;
 import com.example.home.diplom.view.ReminderActivity.Category.category_birthdays;
 import com.example.home.diplom.view.ReminderActivity.Category.category_other;
 import com.example.home.diplom.view.ReminderActivity.Category.category_personal;
@@ -52,6 +58,7 @@ public class ReminderActivity extends AppCompatActivity implements
     TextView reminder_empty;
     public static final int REMINDER_REQUEST_CODE = 101;
     private FloatingActionButton fab_reminder;
+    private SharedPreferences sharedpreferences;
 
     public static int note_id;
 
@@ -145,7 +152,6 @@ public class ReminderActivity extends AppCompatActivity implements
         }
     }
 
-
     @Override
     protected void onResume()
     {
@@ -154,7 +160,6 @@ public class ReminderActivity extends AppCompatActivity implements
         check();
         super.onResume();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -178,7 +183,6 @@ public class ReminderActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
     {
@@ -201,6 +205,26 @@ public class ReminderActivity extends AppCompatActivity implements
                 }
                 break;
             case R.id.nav_settings:
+                sharedpreferences = getSharedPreferences("settingPrefs", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor = sharedpreferences.edit();
+                new MaterialDialog.Builder(this)
+                        .title(R.string.vibrate)
+                        .items(R.array.settingVibrate)
+                        .cancelable(false)
+                        .theme(Theme.LIGHT)
+                        .itemsColor(getResources().getColor(R.color.colorAccent))
+                        .itemsCallbackSingleChoice(sharedpreferences.getInt("vibrate", -1),
+                                new MaterialDialog.ListCallbackSingleChoice()
+                                {
+                                    @Override
+                                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
+                                    {
+                                        editor.putInt("vibrate", which).commit();
+                                        Toast.makeText(ReminderActivity.this, getString(R.string.saved), Toast.LENGTH_SHORT).show();
+                                        return true;
+                                    }
+                                })
+                        .show();
                 break;
             case R.id.nav_about:
                 intent = new Intent(ReminderActivity.this, AboutActivity.class);
